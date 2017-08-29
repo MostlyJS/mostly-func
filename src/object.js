@@ -43,7 +43,7 @@ const groupObjBy = R.curry(R.pipe(
 
 export const diffObjs = R.pipe(
   R.useWith(R.mergeWith(R.merge), [R.map(R.objOf("left")), R.map(R.objOf("right"))]),
-  R.groupObjBy(R.cond([
+  groupObjBy(R.cond([
     [
       R.both(R.has("left"), R.has("right")),
       R.pipe(R.values, R.ifElse(R.apply(R.equals), R.always("common"), R.always("diff")))

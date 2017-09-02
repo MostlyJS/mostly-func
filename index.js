@@ -13,4 +13,3 @@ const type = require('./lib/type');
 module.exports = Object.assign(ramda,
   func, list, logic, math, object, relation, string, type
 );
-console.log('######', module.exports);

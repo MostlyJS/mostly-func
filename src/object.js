@@ -1,6 +1,13 @@
 import R from 'ramda';
 
 /**
+ * merge with clone
+ */
+export const assign = (...objs) => {
+  return R.mergeAll(R.map(R.clone, objs));
+};
+
+/**
  * Converts an array of key-value pairs into an object.
  *
  * @param {[string | number, any][]} entries - An array of key-value pairs.

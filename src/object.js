@@ -162,6 +162,16 @@ export const omitWhen = R.curry((fn, ks, obj) =>
   R.merge(R.omit(ks, obj), R.reject(fn, R.pick(ks, obj))));
 
 /**
+ * pick by path
+ */
+export const pickPath = (names, obj) => {
+  retrun R.reduce((acc, path) => {
+    path = path.split('.');
+    return fp.assocPath(path, fp.path(path, obj), acc);
+  }, {}, names);
+};
+
+/**
  * Convert a list of property-lists (with header) into a list of objects
  *
  * usage:

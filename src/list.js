@@ -34,6 +34,11 @@ export const isIntersect = R.pipe(R.intersection, R.complement(R.isEmpty));
 export const list = R.unapply(R.identity);
 
 /**
+ * map with (val, index, obj) callback
+ */
+export const mapIndexed = R.addIndex(R.map);
+
+/**
  * Pick values a from list by indexes
  *
  * usage: pickIndexes([0, 2], ['a', 'b', 'c']); // => ['a', 'c']

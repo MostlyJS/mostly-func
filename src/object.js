@@ -229,6 +229,12 @@ export const renameKeys = R.curry((keysMap, obj) =>
  */
 export const renameKeysBy = R.curry((fn, obj) => R.pipe(R.toPairs, R.map(R.adjust(fn, 0)), R.fromPairs)(obj));
 
+
+/**
+ * Sort object key
+ */
+export const sortKeys = R.pipe(R.toPairs, R.sortBy(R.prop(0)), R.fromPairs);
+
 /**
  * spread the dissoced object
  *

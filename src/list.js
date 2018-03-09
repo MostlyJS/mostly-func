@@ -18,10 +18,10 @@ export const groupByMultiple = R.curry((fields, data) => {
   if (fields.length === 1) return R.groupBy(fields[0], data);
   let groupBy = R.groupBy(R.last(fields));
   R.times(() => {
-    groupBy = R.mapObjIndexed(groupBy)
+    groupBy = R.mapObjIndexed(groupBy);
   }, fields.length - 1);
 
-  return groupBy(groupByMultiple(R.init(fields), data))
+  return groupBy(groupByMultiple(R.init(fields), data));
 });
 
 /**

@@ -17,4 +17,3 @@ export const applyN = R.compose(R.reduceRight(R.compose, R.identity), R.repeat);
 export const applyPath = R.curry((path, fn, obj) =>
   R.assocPath(path, fn(R.path(path, obj)), obj)
 );
-

@@ -114,9 +114,9 @@ export const flattenObj = function() {
  */
 export const isPlainObject = it => {
   return it !== null
-      && typeof it === "object"
-      && (!it.constructor || it.constructor === Object)
-      && {}.toString.call(it) === "[object Object]"
+    && typeof it === "object"
+    && (!it.constructor || it.constructor === Object)
+    && {}.toString.call(it) === "[object Object]";
 };
 
 /**
@@ -253,17 +253,17 @@ export const spread = R.converge(R.merge, [R.dissoc, R.propOr({})]);
  * @return {boolean} True if the data passed the specification.
  */
 export const whereAll = (spec, data) => {
-  if (typeof data === "undefined") return typeof spec === "boolean" && !spec
-  if (spec === null) return true
-  if (spec === false) return false
-  if (typeof spec === "number") return data === spec
-  if (typeof spec === "string") return data === spec
-  if (typeof spec === "symbol") return data === spec
+  if (typeof data === "undefined") return typeof spec === "boolean" && !spec;
+  if (spec === null) return true;
+  if (spec === false) return false;
+  if (typeof spec === "number") return data === spec;
+  if (typeof spec === "string") return data === spec;
+  if (typeof spec === "symbol") return data === spec;
 
   return Object.entries(spec).reduce((valid, [key, value]) => {
     if (typeof value === "function" && !value(data[key])) {
-      return false
+      return false;
     }
-    return whereAll(value, data[key]) ? valid : false
-  }, true)
+    return whereAll(value, data[key]) ? valid : false;
+  }, true);
 };

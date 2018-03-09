@@ -1,6 +1,15 @@
 import R from 'ramda';
 
 /**
+ * some convenient aka/alias
+ */
+export const flatMap = R.chain;
+export const maptAt = R.adjust;
+export const constant = R.always;
+export const some = R.any;
+export const match = R.cond;
+
+/**
  * Group by multiple
  *
  * usage: groupByMultiple([R.prop('a'), R.prop('b'), R.prop('c')], data)

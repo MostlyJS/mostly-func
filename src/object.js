@@ -206,6 +206,26 @@ export const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
 export const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
 
 /**
+ * assocPath work with arrays too
+ *
+ * R.assocPath(['a', 0, 'b'], 'hi', { a: [{ b: 'hey' }] })
+ * // => { a: { '0': { b: 'hi' } } }
+ *
+ * R.setPath(['a', 0, 'b'], 'hi', { a: [{ b: 'hey' }] })
+ * // => { a: [{ b: 'hi' }] }
+ */
+export const setPath = R.curry((path, val, obj) => R.compose(
+  R.set(R.__, val, obj),
+  R.apply(R.compose),
+  R.map(R.cond([
+    [R.is(Number), R.lensIndex],
+    [R.T, R.lensProp]
+  ]))
+)(path));
+
+export const setDotPath = R.useWith(setPath, [R.split('.')]);
+
+/**
  * Creates a new object with the own properties of the provided object, but the
  * keys renamed according to the keysMap object as `{oldKey: newKey}`.
  * When some key is not found in the keysMap, then it's passed as-is.

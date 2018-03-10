@@ -1,6 +1,15 @@
 import R from 'ramda';
 
 /**
+ * some convenient complement
+ */
+export const isNotNil = R.complement(R.isNil);
+export const isNotEmpty = R.complement(R.isEmpty);
+export const hasNot = R.complement(R.has);
+export const isNotEquals = R.both(R.complement(R.isNil), R.complement(R.equals));
+export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
+
+/**
  * merge with clone
  */
 export const assign = (...objs) => {

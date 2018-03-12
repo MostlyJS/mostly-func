@@ -209,6 +209,8 @@ export const propertyList = R.compose(R.apply(R.lift(R.zipObj)), R.splitAt(1));
 
 export const dotPath = R.useWith(R.path, [R.split('.')]);
 
+export const dotPathEq = R.useWith(R.pathEq, [R.split('.')]);
+
 export const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
 
 // Derivative of R.props for deep fields

@@ -43,9 +43,24 @@ export const isIntersect = R.pipe(R.intersection, R.complement(R.isEmpty));
 export const list = R.unapply(R.identity);
 
 /**
+ * Creates an array with all falsy values removed.
+ * The values false, null, 0, "", undefined, and NaN are falsy.
+ *
+ * usage: compact([0, 1, false, 2, '', 3]); //=> [1, 2, 3]
+ *
+ * @sig Filterable f => f a -> f a
+ */
+export const compact = R.reject(R.compose(R.equals(false), Boolean));
+
+/**
  * map with (val, index, obj) callback
  */
 export const mapIndexed = R.addIndex(R.map);
+
+/**
+ * map with (val, index, obj) callback
+ */
+export const reduceIndexed = R.addIndex(R.reduce);
 
 /**
  * Pick values a from list by indexes

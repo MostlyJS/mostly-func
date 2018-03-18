@@ -71,6 +71,12 @@ export const reduceIndexed = R.addIndex(R.reduce);
  */
 export const pickIndexes = R.compose(R.values, R.pickAll);
 
+
+/**
+ * Count members of the given filterable which satisfy the given predicate
+ */
+export const count = R.compose(R.length, R.filter);
+
 /**
  * Pivot a table with a function to resolve conflicts (multiple values
  * for the same attribute)

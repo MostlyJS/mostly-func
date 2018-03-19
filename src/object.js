@@ -164,12 +164,12 @@ export const omitWhen = R.curry((fn, ks, obj) =>
 /**
  * pick by path
  */
-export const pickPath = (names, obj) => {
+export const pickPath = R.curry((names, obj) => {
   return R.reduce((acc, path) => {
     path = path.split('.');
     return R.assocPath(path, R.path(path, obj), acc);
   }, {}, names);
-};
+});
 
 /**
  * dissoc fields by path

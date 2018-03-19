@@ -71,7 +71,6 @@ export const reduceIndexed = R.addIndex(R.reduce);
  */
 export const pickIndexes = R.compose(R.values, R.pickAll);
 
-
 /**
  * Count members of the given filterable which satisfy the given predicate
  */

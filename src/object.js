@@ -1,15 +1,6 @@
 import R from 'ramda';
 
 /**
- * some convenient complement
- */
-export const isNotNil = R.complement(R.isNil);
-export const isNotEmpty = R.complement(R.isEmpty);
-export const hasNot = R.complement(R.has);
-export const isNotEquals = R.both(R.complement(R.isNil), R.complement(R.equals));
-export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
-
-/**
  * merge with clone
  */
 export const assign = (...objs) => {
@@ -213,7 +204,7 @@ export const dotPathEq = R.useWith(R.pathEq, [R.split('.')]);
 
 export const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
 
-// Derivative of R.props for deep fields
+// Derivative of R.props for deep fields with dot path
 export const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
 
 /**

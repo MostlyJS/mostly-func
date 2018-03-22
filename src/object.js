@@ -94,7 +94,7 @@ export const findById = R.converge(
  * usage: flattenObj({a:1, b:{c:3}, d:{e:{f:6}, g:[{h:8, i:9}, 0]}})
  * //=> {"a": 1, "b.c": 3, "d.e.f": 6, "d.g.0.h": 8, "d.g.0.i": 9, "d.g.1": 0}
  */
-export const flattenObj = function() {
+export const flattenObj = function () {
   const go = obj_ => R.chain(([k, v]) => {
     if (typeof v == 'object') {
       return R.map(([k_, v_]) => [`${k}.${k_}`, v_], go(v));

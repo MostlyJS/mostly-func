@@ -115,7 +115,7 @@ export const pivotWith = R.curry((fn, keyCol, valCol, table) => R.pipe(
  *   [{ key: key1, attribute1: 1, attribute3: 3 },
  *    { key: key2, attribute1: 2, attribute2: 4 }]
  */
-export const pivot = exports.pivotWith(R.nthArg(0));
+export const pivot = pivotWith(R.nthArg(0));
 
 /**
  * Unpivot a table
@@ -168,7 +168,7 @@ export const separate = R.curry((n, list) => {
  */
 export const separateBy = R.curry((comparator, n, coll) => {
   let sorted = R.sortBy(comparator, coll);
-  return exports.separate(n, sorted);
+  return separate(n, sorted);
 });
 
 /*

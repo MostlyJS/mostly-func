@@ -1,10 +1,15 @@
 import R from 'ramda';
 
 /**
+ * merge deep with all
+ */
+export const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
+
+/**
  * merge with clone
  */
 export const assign = (...objs) => {
-  return R.mergeAll(R.map(R.clone, objs));
+  return mergeDeepAll(R.map(R.clone, objs));
 };
 
 /**

@@ -1,6 +1,5 @@
 import R from 'ramda';
 
-
 /**
  * some convenient complement
  */
@@ -22,3 +21,12 @@ export const isTruthy = R.pipe(Boolean, R.equals(true));
  * Falsy values are `false`, `0`, `""`, `null`, `undefined`, and `NaN`.
  */
 export const isFalsy = R.complement(isTruthy);
+
+/**
+ * Checks if input value is `Function`.
+ */
+export isFunction = R.anyPass(
+  val => Object.prototype.toString.call(val) === '[object Function]',
+  val => Object.prototype.toString.call(val) === '[object AsyncFunction]',
+  val => Object.prototype.toString.call(val) === '[object GeneratorFunction]'
+);

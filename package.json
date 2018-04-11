@@ -20,22 +20,8 @@
     "url": "git+https://github.com/MostlyJS/mostly-func.git"
   },
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "debug": "^2.6.6",
     "esm": "^3.0.14",
-    "heapdump": "^0.3.9",
-    "hjson": "^2.4.3",
-    "lodash": "^4.17.4",
-    "mixpanel": "^0.7.0",
-    "mongodb-arbiter-discovery": "^0.1.2",
-    "nconf": "^0.8.4",
-    "node-statsd": "^0.1.1",
-    "ramda": "^0.24.1",
-    "redis": "^2.7.1",
-    "response-time": "^2.3.2",
-    "shutdown": "^0.3.0",
-    "winston": "^2.3.1",
-    "winston-udp": "^0.0.7"
+    "ramda": "^0.24.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

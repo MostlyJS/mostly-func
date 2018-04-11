@@ -28,7 +28,6 @@
     "lodash": "^4.17.4",
     "mixpanel": "^0.7.0",
     "mongodb-arbiter-discovery": "^0.1.2",
-    "mongodb-datadog-stats": "^0.1.2",
     "nconf": "^0.8.4",
     "node-statsd": "^0.1.1",
     "ramda": "^0.24.1",

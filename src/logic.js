@@ -1,3 +1,4 @@
+import _isObject from 'ramda/src/internal/_isObject';
 import R from 'ramda';
 
 /**
@@ -43,3 +44,26 @@ export const isObj = R.both(isNotNull, R.either(isTypeOfObject, isFunction));
  * Checks if value is object-like. A value is object-like if it's not null and has a typeof result of "object".
  */
 export const isObjLike = R.both(isNotNull, isTypeOfObject);
+
+const isObjectConstructor = R.pipe(R.toString, R.equals(R.toString(Object)));
+const hasObjectConstructor = R.pathSatisfies(
+  R.both(isFunction, isObjectConstructor),
+  ['constructor']
+);
+
+/**
+ * Check to see if an object is a plain object (created using `{}`, `new Object()` or `Object.create(null)`).
+ */
+export const isPlainObj = val => {
+  if (!isObjLike(val) || !_isObject(val)) {
+    return false;
+  }
+
+  const proto = Object.getPrototypeOf(val);
+
+  if (isNull(proto)) {
+    return true;
+  }
+
+  return hasObjectConstructor(proto);
+};

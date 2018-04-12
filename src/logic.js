@@ -3,9 +3,11 @@ import R from 'ramda';
 /**
  * some convenient complement
  */
+export const hasNot = R.complement(R.has);
 export const isNotNil = R.complement(R.isNil);
 export const isNotEmpty = R.complement(R.isEmpty);
-export const hasNot = R.complement(R.has);
+export const isNull = R.equals(null);
+export const isNotNull = R.complement(isNull);
 export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
 
 /**
@@ -20,3 +22,12 @@ export const isTruthy = R.pipe(Boolean, R.equals(true));
  * Falsy values are `false`, `0`, `""`, `null`, `undefined`, and `NaN`.
  */
 export const isFalsy = R.complement(isTruthy);
+
+/**
+ * Checks if input value is `Function`.
+ */
+export const isFunction = R.anyPass([
+  val => Object.prototype.toString.call(val) === '[object Function]',
+  val => Object.prototype.toString.call(val) === '[object AsyncFunction]',
+  val => Object.prototype.toString.call(val) === '[object GeneratorFunction]'
+]);

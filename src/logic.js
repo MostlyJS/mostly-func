@@ -31,3 +31,15 @@ export const isFunction = R.anyPass([
   val => Object.prototype.toString.call(val) === '[object AsyncFunction]',
   val => Object.prototype.toString.call(val) === '[object GeneratorFunction]'
 ]);
+
+export const isTypeOfObject = val => typeof val === 'object';
+
+/**
+ * Checks if input value is language type of `Object`.
+ */
+export const isObj = R.both(isNotNull, R.either(isTypeOfObject, isFunction));
+
+/**
+ * Checks if value is object-like. A value is object-like if it's not null and has a typeof result of "object".
+ */
+export const isObjLike = R.both(isNotNull, isTypeOfObject);

@@ -13,6 +13,7 @@ export const idEquals = R.curry((a, b) => {
   if (b && typeof b.equals === 'function') return b.equals(a);
   return R.equals(a, b);
 });
+export const idNotEquals = R.complement(idEquals);
 
 /**
  * Returns true if prop equals as mongo objectId/string
@@ -20,3 +21,4 @@ export const idEquals = R.curry((a, b) => {
 export const idPropEq = R.curry((name, val, obj) =>
   R.propSatisfies(idEquals(val), name, obj)
 );
+export const idPropNe = R.complement(idPropEq);

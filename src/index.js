@@ -1,5 +1,6 @@
 import ramda from 'ramda';
 import * as func from './function';
+import * as future from './future';
 import * as list from './list';
 import * as logic from './logic';
 import * as math from './math';
@@ -9,5 +10,5 @@ import * as string from './string';
 import * as type from './type';
 
 export default Object.assign(ramda,
-  func, list, logic, math, object, relation, string, type
+  func, future, list, logic, math, object, relation, string, type
 );

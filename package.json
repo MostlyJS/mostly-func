@@ -21,7 +21,10 @@
   },
   "dependencies": {
     "esm": "^3.0.14",
-    "ramda": "^0.24.1"
+    "fluture": "^8.0.2",
+    "folktale": "^2.1.0",
+    "ramda": "^0.24.1",
+    "sanctuary": "^0.14.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

@@ -1,7 +1,7 @@
 {
   "name": "mostly-func",
   "version": "1.0.3",
-  "description": "Functional library for Mostly microservices, loaded with ramda ",
+  "description": "Functional library for building Mostly microservices with ramda/sanctuary",
   "author": "Forafish",
   "license": "MIT",
   "main": "index.js",

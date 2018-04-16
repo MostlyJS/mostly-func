@@ -17,3 +17,11 @@ export const catMaybies = R.compose(
   R.filter(Maybe.isJust)
 );
 
+/**
+ * Unwraps Either monad and returns it’s value if it is Right and throws an Error
+ * if it is Left.
+ */
+// :: Either a b -> b
+export const explodeEither = Either.fold(err => {
+  throw new Error(`Explosion failed: ${err}`);
+}, R.identity);

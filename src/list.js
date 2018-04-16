@@ -210,3 +210,18 @@ export const swap = (oldIndex, newIndex, array) => {
  * @return {any[]} An array of unique elements.
  */
 export const uniquesFor = (...a) => [...new Set([].concat(...a))];
+
+/**
+ * Returns the list of list of strings.
+ * Removes all duplicates from the subsequent list
+ * on the basis of already filtered values lists.
+ *
+ * E.G.
+ * [['a', 'b', 'c'], ['b','c','d'], ['a','d','e']]
+ * will become
+ * [['a', 'b', 'c'], ['d'], ['e']]
+ */
+// :: [[String]] -> [[String]]
+export const uniqLists = R.reduce((acc, nextList) =>
+  R.append(R.without(R.unnest(acc), nextList), acc), []);
+

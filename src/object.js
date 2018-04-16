@@ -105,6 +105,20 @@ export const filterWithKeys = R.curry((pred, obj) =>
 );
 
 /**
+ * Finds a key that contains specified value.
+ * If object contains few properties with this value
+ * it will return only one, first matched.
+ */
+// :: a -> Map b a -> b
+export const findKeyOfValue = R.curry((val, obj) =>
+  R.compose(
+    R.nth(0),
+    R.find(R.compose(R.equals(val), R.nth(1))),
+    R.toPairs
+  )(obj)
+);
+
+/**
  * Get object by id
  */
 // :: String -> Array -> Object
@@ -306,8 +320,8 @@ export const setDotPath = R.useWith(setPath, [R.split('.')]);
  */
 // :: {a: b} -> {a: *} -> {b: *}
 export const renameKeys = R.curry((keysMap, obj) =>
-  R.reduce((acc, key) => R.assoc(keysMap[key] || key, obj[key], acc), {}, R.keys(obj))
-);
+  R.reduce((acc, key) =>
+    R.assoc(keysMap[key] || key, obj[key], acc), {}, R.keys(obj)));
 
 /**
  * Rename keys of an object by a function

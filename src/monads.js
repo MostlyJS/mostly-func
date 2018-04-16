@@ -43,3 +43,16 @@ export const catMaybies = (maybeObjects) => R.compose(
 export const explodeEither = foldEither(err => {
   throw new Error(`Explosion failed: ${err}`);
 }, R.identity);
+
+// :: Either a b -> Promise a b
+export const eitherToPromise = foldEither(
+  Promise.reject.bind(Promise),
+  Promise.resolve.bind(Promise)
+);
+
+// :: (() -> b) -> (a -> a) -> Maybe a -> Promise a b
+export const maybeToPromise = R.curry((nothingFn, justFn, maybe) =>
+  new Promise((resolve, reject) =>
+    (maybe.isJust ? resolve(maybe.value) : reject())
+  ).then(justFn, nothingFn)
+);

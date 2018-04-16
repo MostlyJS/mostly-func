@@ -1,5 +1,7 @@
 import R from 'ramda';
 
+export const noop = () => {};
+
 /*
  * Apply a given function N times
  *

@@ -28,9 +28,8 @@ export const groupByMultiple = R.curry((fields, data) => {
  * Do any item in a list appear in another list?
  *
  * usage: overlaps(['-v', '--verbose'], ['node', 'script.js', '-v']) // true
- *
- * @sig: :: [a] -> [a] -> Boolean
  */
+// :: [a] -> [a] -> Boolean
 export const isIntersect = R.pipe(R.intersection, R.complement(R.isEmpty));
 
 /**
@@ -53,8 +52,10 @@ export const list = R.unapply(R.identity);
 export const compact = R.reject(R.compose(R.equals(false), Boolean));
 
 /**
- * map with (val, index, obj) callback
+ * Maps an array using a mapping function (val, index, obj) receives
+ * an array element, its index, and the whole array itself
  */
+// :: ((a, Number, [a]) -> b) -> [a] -> [b]
 export const mapIndexed = R.addIndex(R.map);
 
 /**
@@ -185,6 +186,25 @@ const makeComparator = (prop) =>
 export const sortByProps = (props, list) =>
   R.sort(variadicEither(...R.map(makeComparator, props)), list);
 
+/**
+ * Swaps two elements of `array` having `oldIndex` and `newIndex` indexes.
+ */
+// :: Number -> Number -> [a] -> [a]
+export const swap = (oldIndex, newIndex, array) => {
+  const len = array.length;
+  if (oldIndex >= len || newIndex >= len) {
+    throw new Error(
+      `Can not swap items that out of an array: ${oldIndex} > ${newIndex}. Array length: ${len}.`
+    );
+  }
+
+  const oldItem = R.nth(oldIndex, array);
+  const newItem = R.nth(newIndex, array);
+
+  return R.pipe(R.update(oldIndex, newItem), R.update(newIndex, oldItem))(
+    array
+  );
+};
 
 /**
  * Gets elements that are unique throughout a given group of arrays.

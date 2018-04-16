@@ -36,9 +36,8 @@ export const isIntersect = R.pipe(R.intersection, R.complement(R.isEmpty));
  * Create a list function
  *
  * usage: list(1, 2, 3); // => [1, 2, 3]
- *
- * @sig: :: a... -> [a...]
  */
+// :: a... -> [a...]
 export const list = R.unapply(R.identity);
 
 /**
@@ -47,8 +46,7 @@ export const list = R.unapply(R.identity);
  *
  * usage: compact([0, 1, false, 2, '', 3]); //=> [1, 2, 3]
  *
- * @sig Filterable f => f a -> f a
- */
+// Filterable f => f a -> f a
 export const compact = R.reject(R.compose(R.equals(false), Boolean));
 
 /**
@@ -68,8 +66,7 @@ export const reduceIndexed = R.addIndex(R.reduce);
  *
  * usage: pickIndexes([0, 2], ['a', 'b', 'c']); // => ['a', 'c']
  *
- * @sig: :: [Number] -> [a] -> [a]
- */
+// :: [Number] -> [a] -> [a]
 export const pickIndexes = R.compose(R.values, R.pickAll);
 
 /**

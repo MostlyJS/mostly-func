@@ -26,9 +26,8 @@ export const arrayAsObject = entries => entries.reduce((o, [k, v]) => (o[k] = v,
  *
  * usage: objArray(["key", "value"], {I: 2, it: 4, that: 1});
  * // [{"key": 2, "value": "I"}, {"key": 4, "value": "it"}, {"key": 1, "value": "that"}]
- *
- * :: {a} -> [{ key :: String, value :: a }]
  */
+// :: {a} -> [{ key :: String, value :: a }]
 export const objectAsArray = R.curry((keys, obj) =>
   R.compose(R.map(R.zipObj(keys)), R.toPairs)(obj)
 );
@@ -85,9 +84,8 @@ export const filterWithKeys = R.curry((pred, obj) =>
 
 /**
  * Get object by id
- *
- * @sig: :: String -> Array -> Object
  */
+// :: String -> Array -> Object
 export const findById = R.converge(
   R.find,
   [R.pipe(R.nthArg(0), R.propEq("id")), R.nthArg(1)]
@@ -148,8 +146,8 @@ export const objOfArray = R.curry((fn, arr) =>
 
 /**
  * Get object size
- * @sig :: Object -> Number
  */
+// :: Object -> Number
 export const objSize = R.nAry(1, R.pipe(
   R.when(R.is(Object), R.keys),
   R.when(R.is(Boolean), R.cond([[R.equals(false), R.always(null)], [R.T, R.always(1)]])),
@@ -169,12 +167,11 @@ export const omitWhen = R.curry((fn, ks, obj) =>
 /**
  * Returns whether or not an object has an own property with the specified name at a given path.
  *
- * @sig [Idx] -> {a} -> Boolean
- *
  * usage:
  *   hasPath(['a', 'b'], { a: { b: 1 } }); //=> true
  *   hasPath([0], [1, 2]); //=> true
  */
+// :: [Idx] -> {a} -> Boolean
 export const hasPath = R.curryN(2, (path, obj) => {
   const prop = R.head(path);
   // termination conditions
@@ -264,9 +261,8 @@ export const setDotPath = R.useWith(setPath, [R.split('.')]);
  *
  * usage: const input = { firstName: 'Elisia', type: 'human' }
  *        renameKeys({ firstName: 'name', type: 'kind' })(input) // //=> { name: 'Elisia', kind: 'human' }
- *
- * @sig {a: b} -> {a: *} -> {b: *}
  */
+// :: {a: b} -> {a: *} -> {b: *}
 export const renameKeys = R.curry((keysMap, obj) =>
   R.reduce((acc, key) => R.assoc(keysMap[key] || key, obj[key], acc), {}, R.keys(obj))
 );

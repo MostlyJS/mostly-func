@@ -12,8 +12,8 @@ export const applyN = R.compose(R.reduceRight(R.compose, R.identity), R.repeat);
  *
  * usage: mapPath(['a', 'b', 'c'], R.inc, {a: {b: {c: 3}}});
  *   //=> { a: { b: { c: 4 } } }
- * @sig: :: [String] -> (a -> b) -> {k: a} -> {k: b}
  */
+// :: [String] -> (a -> b) -> {k: a} -> {k: b}
 export const applyPath = R.curry((path, fn, obj) =>
   R.assocPath(path, fn(R.path(path, obj)), obj)
 );

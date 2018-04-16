@@ -164,6 +164,20 @@ export const objSize = R.nAry(1, R.pipe(
 export const omitWhen = R.curry((fn, ks, obj) =>
   R.merge(R.omit(ks, obj), R.reject(fn, R.pick(ks, obj))));
 
+/*
+ * Like Ramda’s `omit` but works recursively, and never changes the type of
+ * an input.
+ */
+// :: [String] -> a -> a
+export const omitRecursively = R.curry((keys, input) => {
+  const isPlainObject = R.both(R.is(Object), R.complement(R.is(Array)));
+
+  return R.compose(
+    R.map(R.when(R.is(Object), omitRecursively(keys))),
+    R.when(isPlainObject, R.omit(keys))
+  )(input);
+});
+
 /**
  * Returns whether or not an object has an own property with the specified name at a given path.
  *

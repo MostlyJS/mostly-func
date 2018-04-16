@@ -328,8 +328,15 @@ export const renameKeys = R.curry((keysMap, obj) =>
  *
  * usage: renameBy(R.concat('a'), { A: 1, B: 2, C: 3 }) // { aA: 1, aB: 2, aC: 3 }
  */
-export const renameKeysBy = R.curry((fn, obj) => R.pipe(R.toPairs, R.map(R.adjust(fn, 0)), R.fromPairs)(obj));
+export const renameKeysBy = R.curry((fn, obj) =>
+  R.pipe(R.toPairs, R.map(R.adjust(fn, 0)), R.fromPairs)(obj));
 
+/**
+ * Switch keys with values.
+ * E.G. { a: 'abc' } will become { abc: 'a' }
+ */
+// :: Map a b -> Map b a
+export const invertMap = R.compose(R.fromPairs, R.map(R.reverse), R.toPairs);
 
 /**
  * Sort object key

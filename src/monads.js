@@ -56,3 +56,33 @@ export const maybeToPromise = R.curry((nothingFn, justFn, maybe) =>
     (maybe.isJust ? resolve(maybe.value) : reject())
   ).then(justFn, nothingFn)
 );
+
+/**
+ * Returns a result of calling iterator function over argument list.
+ * Use this function if iterator function returns some Monad.
+ * Monad constructor should be passed as first argument, cause
+ * we haven't got type deduction in JS. :-(
+ * E.G.
+ * assocLink :: Link -> Patch -> Either Error Patch
+ * upsertLinks = reduceEither(assocLink, patch, [link0, link1, link2]);
+ */
+// :: (b -> m b) -> (b -> a -> m b) -> b -> [a] -> m c
+export const reduceM = R.curry((m, fn, initial, list) =>
+  R.reduce((acc, a) => R.chain(val => fn(val, a), acc), m(initial), list)
+);
+
+/**
+ * Returns a result of calling iterator function over argument list.
+ * Use this function if iterator function returns Either.
+ * @see reduceM for more details
+ */
+// :: (b -> a -> Either c b) -> b -> [a] -> Either c b
+export const reduceEither = reduceM(S.of(Either));
+
+/**
+ * Returns a result of calling iterator function over argument list.
+ * Use this function if iterator function returns Either.
+ * @see reduceM for more details
+ */
+// :: (b -> a -> Maybe b) -> b -> [a] -> Maybe b
+export const reduceMaybe = reduceM(S.of(Maybe));

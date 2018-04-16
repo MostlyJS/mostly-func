@@ -1,11 +1,14 @@
 import R from 'ramda';
 import { default as S, Maybe, Either } from 'sanctuary';
 
-/*
- * Shortcuts for easier ReasonML interop
+/**
+ * Adapter/Shortcust for eaiser interop
  */
-export const eitherLeft = S.Left;
-export const eitherRight = S.Right;
+export const eitherLeft = Either.Left = S.Left;
+export const eitherRight = Either.Right = S.Right;
+
+Either.of = Either.prototype.of = S.of(Either);
+Maybe.of = Maybe.prototype.of = S.of(Maybe);
 
 /**
  * adapter function to extract value from `Either` by providing a function
@@ -77,7 +80,7 @@ export const reduceM = R.curry((m, fn, initial, list) =>
  * @see reduceM for more details
  */
 // :: (b -> a -> Either c b) -> b -> [a] -> Either c b
-export const reduceEither = reduceM(S.of(Either));
+export const reduceEither = reduceM(Either.of);
 
 /**
  * Returns a result of calling iterator function over argument list.
@@ -85,4 +88,24 @@ export const reduceEither = reduceM(S.of(Either));
  * @see reduceM for more details
  */
 // :: (b -> a -> Maybe b) -> b -> [a] -> Maybe b
-export const reduceMaybe = reduceM(S.of(Maybe));
+export const reduceMaybe = reduceM(Maybe.of);
+
+/**
+ * Returns Either b c.
+ *
+ * Checks passed value for condition and if it passes it
+ * returns Either.Right with the same value, if not — returns
+ * Either.Left with result of calling second function from second
+ * argument passed into `leftIf`.
+ *
+ * E.G.
+ * ```
+ *   const validateMoreThan5 = leftIf(x => x > 5, x => `${x} less than 5`);
+ *   validateMoreThan5(3); // Either.Left '3 less than 5'
+ *   validateMoreThan5(6); // Either.Right 6
+ * ```
+ */
+// :: (a -> c) -> (a -> b) -> a -> Either b c
+export const leftIf = R.curry((condition, leftFn, val) =>
+    condition(val) ? Either.of(val) : S.Left(leftFn(val))
+);

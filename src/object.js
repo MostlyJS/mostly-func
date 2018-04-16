@@ -13,6 +13,28 @@ export const assign = (...objs) => {
 };
 
 /**
+ * Returns a copy of second object with omitted
+ * fields that are equal to fields from first object.
+ * Kind of the reverse of R.merge.
+ *
+ * usage: subtractObject({ foo: 1, bar: 2 }, { foo: 1, bar: 'not 2', baz: 3 })
+ *  // => { bar: "not 2", baz: 3}
+ */
+// :: Object -> Object -> Object
+export const subtractObject = R.uncurryN(2, objToSubstract =>
+  R.converge(R.omit, [
+    R.compose(
+      R.keys,
+      R.pickBy(
+        R.both((value, key) => R.has(key, objToSubstract),
+               (value, key) => R.propEq(key, value, objToSubstract))
+      )
+    ),
+    R.identity,
+  ])
+);
+
+/**
  * Converts an array of key-value pairs into an object.
  *
  * @param {[string | number, any][]} entries - An array of key-value pairs.

@@ -145,6 +145,12 @@ export const objOfArray = R.curry((fn, arr) =>
 );
 
 /**
+ * Like `R.objOf` but returns empty object {} if value is `null` or `undefined`
+ */
+// :: String -> a -> StrMap a
+export const optObjOf = R.curry((key, val) => (val == null ? {} : { [key]: val }));
+
+/**
  * Get object size
  */
 // :: Object -> Number

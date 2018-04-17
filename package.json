@@ -1,6 +1,6 @@
 {
   "name": "mostly-func",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Functional library for building Mostly microservices with ramda/sanctuary",
   "author": "Forafish",
   "license": "MIT",
@@ -15,9 +15,13 @@
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run lint && npm run coverage"
   },
+  "homepage": "https://github.com/MostlyJS/mostly-func#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MostlyJS/mostly-func.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MostlyJS/mostly-func/issues"
   },
   "dependencies": {
     "esm": "^3.0.14",

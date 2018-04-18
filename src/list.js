@@ -225,3 +225,20 @@ export const uniquesFor = (...a) => [...new Set([].concat(...a))];
 export const uniqLists = R.reduce((acc, nextList) =>
   R.append(R.without(R.unnest(acc), nextList), acc), []);
 
+/**
+ * Returns a shuffled version of a list, using the	
+ * [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+ */
+export const shuffler = R.curry((random, list) => {
+  let idx = -1;
+  let len = list.length;
+  let position;
+  let result = [];
+  while (++idx < len) {
+    position = Math.floor((idx + 1) * random());
+    result[idx] = result[position];
+    result[position] = list[idx];
+  }
+  return result;
+});
+export const shuffle = shuffler(Math.random);

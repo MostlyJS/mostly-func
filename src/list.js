@@ -34,6 +34,14 @@ export const groupByMultiple = R.curry((fields, data) => {
 export const overlaps = R.pipe(R.intersection, R.complement(R.isEmpty));
 
 /**
+ * Do all item in a list appear in another list?
+ *
+ * usage: includesAll([2, 1], [1, 2, 3]) // true
+ */
+// :: [a] -> [a] -> Boolean
+export const includesAll = R.pipe(R.difference, R.isEmpty);
+
+/**
  * Create a list function
  *
  * usage: list(1, 2, 3); // => [1, 2, 3]

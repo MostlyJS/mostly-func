@@ -8,6 +8,7 @@ export const maptAt = R.adjust;
 export const constant = R.always;
 export const some = R.any;
 export const match = R.cond;
+export const includes = R.contains;
 
 /**
  * Group by multiple

@@ -31,7 +31,7 @@ export const groupByMultiple = R.curry((fields, data) => {
  * usage: overlaps(['-v', '--verbose'], ['node', 'script.js', '-v']) // true
  */
 // :: [a] -> [a] -> Boolean
-export const isIntersect = R.pipe(R.intersection, R.complement(R.isEmpty));
+export const overlaps = R.pipe(R.intersection, R.complement(R.isEmpty));
 
 /**
  * Create a list function

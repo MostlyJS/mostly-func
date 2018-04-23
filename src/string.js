@@ -48,3 +48,11 @@ export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
 // :: String -> [String]
 export const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zéçA-ZÉÇ0-9]+/g));
 
+/**
+ * Decapitalize first letter.
+ *
+ * usage: lowerFirst('HELLO WORLD') // 'hELLO WORLD'
+ */
+// :: String -> String
+export const lowerFirst = R.o(R.join(''), R.adjust(R.toLower, 0));
+

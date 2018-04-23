@@ -40,3 +40,11 @@ export const regExp = R.constructN(2, RegExp);
 const reStarts = R.useWith(R.flip(regExp)('gi'), [R.concat('^')]);
 export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
 
+/**
+ * Splits string into list. Delimiter is every sequence of non-alphanumerical values.
+ *
+ * usage: splitAlphameric('Hello    world/1'); // ['Hello', 'world', '1']
+ */
+// :: String -> [String]
+export const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zéçA-ZÉÇ0-9]+/g));
+

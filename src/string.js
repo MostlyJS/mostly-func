@@ -112,3 +112,15 @@ export const pascalCase = R.o(
  // :: String -> String
 export const camelCase = R.o(lowerFirst, pascalCase);
 
+/**
+ * Converts string into snake_case.
+ *
+ * usage: snakeCase('hello-world')   // 'hello_world'
+ *        snakeCase('hello- world')    // 'hello_world'
+ *        snakeCase('  hello-/ world/ ') // 'hello_world'
+ */
+// :: String -> String
+export const snakeCase = R.o(
+  R.join('_'),
+  R.o(R.map(R.toLower), splitAlphameric)
+);

@@ -89,3 +89,16 @@ export const kebabCase = R.o(
   R.o(R.map(R.toLower), splitAlphameric)
 );
 
+/**
+ * Converts string into PascalCase.
+ *
+ * usage: pascalCase('hello-world')    // 'HelloWorld'
+ *        pascalCase('hello- world')   // 'HelloWorld'
+ *        pascalCase('  hello-/ world/ ')  // 'HelloWorld'
+ */
+// :: String -> String
+export const pascalCase = R.o(
+  R.join(''),
+  R.o(R.map(upperFirst), splitAlphameric)
+);
+

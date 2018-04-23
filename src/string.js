@@ -76,3 +76,16 @@ export const dotCase = R.o(
   R.o(R.map(R.toLower), splitAlphameric)
 );
 
+/**
+ * Converts string into kebab-case.
+ *
+ * usage: kebabCase('hello-world')   // 'hello-world'
+ *        kebabCase('hello- world')    // 'hello-world'
+ *        kebabCase('  hello-/ world/ ') // 'hello-world'
+ */
+ // :: String -> String
+export const kebabCase = R.o(
+  R.join('-'),
+  R.o(R.map(R.toLower), splitAlphameric)
+);
+

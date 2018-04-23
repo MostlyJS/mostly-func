@@ -56,3 +56,10 @@ export const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zéçA-Z
 // :: String -> String
 export const lowerFirst = R.o(R.join(''), R.adjust(R.toLower, 0));
 
+/**
+ * Capitalize first letter.
+ * uage: upperFirst('hello world') // 'Hello world'
+ */
+// :: String -> String
+export const upperFirst = R.o(R.join(''), R.adjust(R.toUpper, 0));
+

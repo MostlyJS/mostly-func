@@ -29,3 +29,14 @@ export const splitOrArray = R.ifElse(
  */
 export const regExp = R.constructN(2, RegExp);
 
+/**
+ * Testing string if starts with some prefix.
+ *
+ * usage: prefixWith('h', 'hello') // true
+ *        prefixWith('hell', 'hello')  // true
+ *        prefixWith('h', 'good bye')  // false
+ */
+// :: a -> b -> Boolean
+const reStarts = R.useWith(R.flip(regExp)('gi'), [R.concat('^')]);
+export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
+

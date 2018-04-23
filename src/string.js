@@ -47,7 +47,19 @@ export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
  * usage: splitAlphameric('Hello    world/1'); // ['Hello', 'world', '1']
  */
 // :: String -> [String]
-export const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zéçA-ZÉÇ0-9]+/g));
+export const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zA-Z0-9]+/g));
+
+/**
+ * Split string on caplital letters
+ */
+// :: String -> [String]
+export const splitCapital = R.split(/(?=[A-Z])/); // positive lookahead to split by the capital letters
+
+/**
+ * Split string on caplital letters and non-alphanumerical values
+ */
+// :: String -> [String]
+export const splitCapitalAlphameric = R.o(R.chain(splitCapital), splitAlphameric);
 
 /**
  * Decapitalize first letter.
@@ -70,11 +82,12 @@ export const upperFirst = R.o(R.join(''), R.adjust(R.toUpper, 0));
  * usage: dotCase('hello-world')   // 'hello.world'
  *        dotCase('hello/*? world')    // 'hello.world'
  *        dotCase('  hello -/ world/ ')  // 'hello.world'
+ *        dotCase('helloWorld/ ')  // 'hello.world'
  */
 // :: String -> String
 export const dotCase = R.o(
   R.join('.'),
-  R.o(R.map(R.toLower), splitAlphameric)
+  R.o(R.map(R.toLower), splitCapitalAlphameric)
 );
 
 /**
@@ -83,11 +96,12 @@ export const dotCase = R.o(
  * usage: kebabCase('hello-world')   // 'hello-world'
  *        kebabCase('hello- world')    // 'hello-world'
  *        kebabCase('  hello-/ world/ ') // 'hello-world'
+ *        kebabCase('helloWorld/ ')  // 'hello-world'
  */
  // :: String -> String
 export const kebabCase = R.o(
   R.join('-'),
-  R.o(R.map(R.toLower), splitAlphameric)
+  R.o(R.map(R.toLower), splitCapitalAlphameric)
 );
 
 /**
@@ -96,11 +110,12 @@ export const kebabCase = R.o(
  * usage: pascalCase('hello-world')    // 'HelloWorld'
  *        pascalCase('hello- world')   // 'HelloWorld'
  *        pascalCase('  hello-/ world/ ')  // 'HelloWorld'
+ *        pascalCase('helloWorld/ ')  // 'HelloWorld'
  */
 // :: String -> String
 export const pascalCase = R.o(
   R.join(''),
-  R.o(R.map(upperFirst), splitAlphameric)
+  R.o(R.map(upperFirst), splitCapitalAlphameric)
 );
 
 /**
@@ -109,6 +124,7 @@ export const pascalCase = R.o(
  * usage: camelCase('hello-world')   // 'helloWorld'
  *        camelCase('hello- world')    // 'helloWorld'
  *        camelCase('  hello-/ world/ ') // 'helloWorld'
+ *        camelCase('HelloWorld/ ')  // 'helloWorld'
  */
  // :: String -> String
 export const camelCase = R.o(lowerFirst, pascalCase);
@@ -119,9 +135,10 @@ export const camelCase = R.o(lowerFirst, pascalCase);
  * usage: snakeCase('hello-world')   // 'hello_world'
  *        snakeCase('hello- world')    // 'hello_world'
  *        snakeCase('  hello-/ world/ ') // 'hello_world'
+ *        snakeCase('HelloWorld/ ')  // 'hello_world'
  */
 // :: String -> String
 export const snakeCase = R.o(
   R.join('_'),
-  R.o(R.map(R.toLower), splitAlphameric)
+  R.o(R.map(R.toLower), splitCapitalAlphameric)
 );

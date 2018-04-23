@@ -21,3 +21,11 @@ export const splitOrArray = R.ifElse(
     R.split(',')
   )
 );
+
+/**
+ * Constructs RegExp.
+ *
+ * usage: R.test(regExp('end$', 'gi'), 'in the end') // true
+ */
+export const regExp = R.constructN(2, RegExp);
+

@@ -63,3 +63,16 @@ export const lowerFirst = R.o(R.join(''), R.adjust(R.toLower, 0));
 // :: String -> String
 export const upperFirst = R.o(R.join(''), R.adjust(R.toUpper, 0));
 
+/**
+ * Converts string into dot.case.
+ *
+ * usage: dotCase('hello-world')   // 'hello.world'
+ *        dotCase('hello/*? world')    // 'hello.world'
+ *        dotCase('  hello -/ world/ ')  // 'hello.world'
+ */
+// :: String -> String
+export const dotCase = R.o(
+  R.join('.'),
+  R.o(R.map(R.toLower), splitAlphameric)
+);
+

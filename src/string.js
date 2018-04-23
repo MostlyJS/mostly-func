@@ -102,3 +102,13 @@ export const pascalCase = R.o(
   R.o(R.map(upperFirst), splitAlphameric)
 );
 
+/**
+ * Converts string into camelCase.
+ *
+ * usage: camelCase('hello-world')   // 'helloWorld'
+ *        camelCase('hello- world')    // 'helloWorld'
+ *        camelCase('  hello-/ world/ ') // 'helloWorld'
+ */
+ // :: String -> String
+export const camelCase = R.o(lowerFirst, pascalCase);
+

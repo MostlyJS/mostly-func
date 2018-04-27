@@ -28,10 +28,10 @@ export const groupByMultiple = R.curry((fields, data) => {
 /**
  * Do any item in a list appear in another list?
  *
- * usage: overlaps(['-v', '--verbose'], ['node', 'script.js', '-v']) // true
+ * usage: includesAny(['a', 'e'], ['a', 'b', 'c']) // true
  */
 // :: [a] -> [a] -> Boolean
-export const overlaps = R.pipe(R.intersection, R.complement(R.isEmpty));
+export const includesAny = R.pipe(R.intersection, R.complement(R.isEmpty));
 
 /**
  * Do all item in a list appear in another list?

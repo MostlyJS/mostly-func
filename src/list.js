@@ -52,7 +52,7 @@ export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
 /**
  * Create a list function
  *
- * usage: list(1, 2, 3); // => [1, 2, 3]
+ * usage: R.compose(R.sum, list)(1, 2, 3) // 6
  */
 // :: a... -> [a...]
 export const list = R.unapply(R.identity);

@@ -35,3 +35,14 @@ export const compareLength = R.useWith(R.__, [R.identity, R.length]);
  */
 // :: Number -> [a] -> Boolean
 export const lengthEq = compareLength(R.equals);
+
+/**
+ * Returns true if length of array is smaller than first argument
+ *
+ * usage: lengthGt(2, [{}])     // true
+ *        lengthGt(2, [{}, {}]) // false
+ */
+// :: Number -> [a] -> Boolean
+export const lengthGt = compareLength(R.gt);
+export const lengthGte = compareLength(R.gte);
+

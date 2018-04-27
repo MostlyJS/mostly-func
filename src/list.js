@@ -31,7 +31,7 @@ export const groupByMultiple = R.curry((fields, data) => {
  * usage: includesAny(['a', 'e'], ['a', 'b', 'c']) // true
  */
 // :: [a] -> [a] -> Boolean
-export const includesAny = R.pipe(R.intersection, R.complement(R.isEmpty));
+export const includesAny = R.curry(R.compose(R.not, R.isEmpty, R.intersection));
 
 /**
  * Do all item in a list appear in another list?
@@ -39,7 +39,7 @@ export const includesAny = R.pipe(R.intersection, R.complement(R.isEmpty));
  * usage: includesAll([2, 1], [1, 2, 3]) // true
  */
 // :: [a] -> [a] -> Boolean
-export const includesAll = R.pipe(R.difference, R.isEmpty);
+export const includesAll = R.curry(R.compose(R.isEmpty, R.difference));
 
 /**
  * Create a list function

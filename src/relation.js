@@ -46,3 +46,13 @@ export const lengthEq = compareLength(R.equals);
 export const lengthGt = compareLength(R.gt);
 export const lengthGte = compareLength(R.gte);
 
+/**
+ * Returns true if length of array is bigger than first argument
+ *
+ * usage: lengthLt(0, [{}])  // true
+ *        lengthLt(0, [])    // false
+ *
+ * @sig Number -> [a] -> Boolean
+ */
+export const lengthLt = compareLength(R.lt);
+export const lengthLte = compareLength(R.lte);

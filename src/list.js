@@ -58,11 +58,20 @@ export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
 export const list = R.unapply(R.identity);
 
 /**
+ * Creates list of length `n`. Every item in list equals to `input` parameter.
+ *
+ * usage replicate(2, 6) // [6, 6]
+ */
+// :: Number -> a -> [a]
+export const replicate = R.flip(R.repeat);
+export const duplicate = replicate(2);
+
+/**
  * Creates an array with all falsy values removed.
  * The values false, null, 0, "", undefined, and NaN are falsy.
  *
  * usage: compact([0, 1, false, 2, '', 3]); //=> [1, 2, 3]
- *
+ */
 // Filterable f => f a -> f a
 export const compact = R.reject(R.compose(R.equals(false), Boolean));
 

@@ -42,6 +42,14 @@ export const includesAny = R.curry(R.compose(R.not, R.isEmpty, R.intersection));
 export const includesAll = R.curry(R.compose(R.isEmpty, R.difference));
 
 /**
+ * Do any item in a list not appear in another list?
+ *
+ * usage: includesNone(['e', 'f'], ['a', 'b', 'c']) // true
+ */
+// :: [a] -> [a] -> Boolean
+export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
+
+/**
  * Create a list function
  *
  * usage: list(1, 2, 3); // => [1, 2, 3]

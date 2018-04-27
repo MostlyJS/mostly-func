@@ -168,6 +168,15 @@ export const mapKeys = R.curry((fn, obj) =>
 );
 
 /**
+ * Map keys/values of an object
+ *
+ * usage: mapKeysAndValues(([a, b]) => [b, a], { foo: "bar", baz: "boo" })
+ *        // { bar: "foo", boo: "baz" }
+ */
+// :: ([a] -> [b]) -> Object -> Object
+export const mapObj = R.useWith(R.compose(R.fromPairs, R.map), [R.identity, R.toPairs]);
+
+/**
  * Make an object from an array using a mapper function
  *
  * usage: arr2obj(R.reverse, ['abc', 'def'])

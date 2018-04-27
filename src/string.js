@@ -42,6 +42,17 @@ const reStarts = R.useWith(R.flip(regExp)('gi'), [R.concat('^')]);
 export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
 
 /**
+ * Testing string if ends with some suffix.
+ *
+ * usage: suffixWith('o', 'hello')     // true
+ *        suffixWith('ello', 'hello')  // true
+ *        suffixWith('y', 'good bye')  // false
+ */
+// :: a -> b -> Boolean
+const reEnds = R.useWith(R.flip(regExp)('gi'), [R.flip(R.concat)('$')]);
+const suffixWith = R.useWith(R.test, [reEnds, R.identity]);
+
+/**
  * Splits string into list. Delimiter is every sequence of non-alphanumerical values.
  *
  * usage: splitAlphameric('Hello    world/1'); // ['Hello', 'world', '1']

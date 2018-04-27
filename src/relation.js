@@ -21,3 +21,17 @@ export const idPropEq = R.curry((name, val, obj) =>
   R.propSatisfies(idEquals(val), name, obj)
 );
 export const idPropNe = R.complement(idPropEq);
+
+/**
+ * compare length of list
+ */
+export const compareLength = R.useWith(R.__, [R.identity, R.length]);
+
+/**
+ * Returns true if length of array equals first argument
+ *
+ * usage: lengthEq(1, [{}]) // true
+ *        lengthEq(1, [])   // false
+ */
+// :: Number -> [a] -> Boolean
+export const lengthEq = compareLength(R.equals);

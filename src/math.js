@@ -4,6 +4,7 @@ export const subtractBy = R.flip(R.subtract);
 export const divideBy = R.flip(R.divide);
 export const moduloBy = R.flip(R.modulo);
 
+export const average = R.converge(R.divide, [R.sum, R.length]);
 
 /**
  * Create an incrementing or decrementing range of numbers with a step

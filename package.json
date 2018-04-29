@@ -1,6 +1,6 @@
 {
   "name": "mostly-func",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Functional library for building Mostly microservices with ramda/sanctuary",
   "author": "Forafish",
   "license": "MIT",

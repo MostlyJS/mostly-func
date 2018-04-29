@@ -6,6 +6,9 @@ export const moduloBy = R.flip(R.modulo);
 
 export const average = R.converge(R.divide, [R.sum, R.length]);
 
+// :: Number -> Number
+export const isOdd = R.o(Boolean, R.modulo(2));
+
 /**
  * Create an incrementing or decrementing range of numbers with a step
  *

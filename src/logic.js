@@ -67,3 +67,13 @@ export const isPlainObj = val => {
 
   return hasObjectConstructor(proto);
 };
+
+
+/**
+ * Count of values satifies a provided function
+ *
+ * usage: countIf(isTruthy, [null, 1, 0, true]) // 2
+ */
+// (a -> Boolean) -> [a] -> Number
+export const countIf = R.curry(R.compose(R.length, R.filter));
+

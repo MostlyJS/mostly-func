@@ -101,6 +101,14 @@ export const pickIndexes = R.compose(R.values, R.pickAll);
 export const count = R.compose(R.length, R.filter);
 
 /**
+ * Returns an over lens to the first index of list.
+ *
+ * usage: overhead(R.toUpper, ['foo', 'bar', 'baz']); //=> ['FOO', 'bar', 'baz']
+ *
+ */
+export const overhead = R.over(R.lensIndex(0));
+
+/**
  * Pivot a table with a function to resolve conflicts (multiple values
  * for the same attribute)
  *

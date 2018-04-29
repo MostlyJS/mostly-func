@@ -280,6 +280,20 @@ export const dissocPaths = (names, obj) => {
 };
 
 /**
+ * Get an object's method names
+ *
+ * usage:
+ *   var obj = {
+ *     foo: true,
+ *     bar: function() {},
+ *     baz: function() {},
+ *   };
+ *   methodNames(obj); // => ['bar', 'baz']
+ */
+// :: methodNames :: Object -> [String]
+export const methodNames = R.compose(R.keys, R.pickBy(R.is(Function)));
+
+/**
  * Convert a list of property-lists (with header) into a list of objects
  *
  * usage:

@@ -177,6 +177,15 @@ export const mapKeys = R.curry((fn, obj) =>
 export const mapKeysAndValues = R.useWith(R.compose(R.fromPairs, R.map), [R.identity, R.toPairs]);
 
 /**
+ * Map object keys. Mapping functions have both key and value as arguments.
+ *
+ * uage: mapKeysWithValue((key, value) => value)({ foo: "bar" }) // { bar: "bar" }
+ */
+// :: ((String, a) -> b) -> Object -> Object
+const wrapMapping = R.compose(R.juxt, R.flip(R.prepend)([R.last]), R.apply);
+export const mapKeysWithValue = R.useWith(mapKeysAndValues, [wrapMapping, R.identity]);
+
+/**
  * Make an object from an array using a mapper function
  *
  * usage: arr2obj(R.reverse, ['abc', 'def'])

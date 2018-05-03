@@ -55,7 +55,7 @@ export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
  * usage: R.compose(R.sum, list)(1, 2, 3) // 6
  */
 // :: a... -> [a...]
-export const list = R.unapply(R.identity);
+export const list = R.compose(R.flatten, R.unapply(R.identity));
 
 /**
  * Creates list of length `n`. Every item in list equals to `input` parameter.
@@ -260,7 +260,7 @@ export const uniqLists = R.reduce((acc, nextList) =>
   R.append(R.without(R.unnest(acc), nextList), acc), []);
 
 /**
- * Returns a shuffled version of a list, using the	
+ * Returns a shuffled version of a list, using the
  * [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
  */
 export const shuffler = R.curry((random, list) => {

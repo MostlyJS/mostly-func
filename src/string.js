@@ -24,6 +24,15 @@ export const splitOrArray = R.ifElse(
 );
 
 /**
+ * truncate string to length
+ */
+// :: String -> String
+export const truncate = lenth => R.when(
+  R.propSatisfies(R.gt(R.__, lenth), 'length'),
+  R.pipe(R.take(lenth), R.append('…'), R.join(''))
+);
+
+/**
  * Constructs RegExp.
  *
  * usage: R.test(regExp('end$', 'gi'), 'in the end') // true

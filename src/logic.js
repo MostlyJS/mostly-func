@@ -83,6 +83,16 @@ export const isPlainObj = val => {
   return hasObjectConstructor(proto);
 };
 
+/**
+ * Checks if input value is a native `Promise`.
+ *
+ * usage: isPromise(null); // => false
+ *        isPromise(Promise.resolve()); // => true
+ *        isPromise(Promise.reject()); // => true
+ *        isPromise({ then: () => 1 }); // => false
+ */
+// :: * -> Boolean
+const isPromise = R.both(isObj, R.pipe(R.toString, R.equals('[object Promise]')));
 
 /**
  * Count of values satifies a provided function

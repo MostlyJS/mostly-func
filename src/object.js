@@ -320,6 +320,16 @@ export const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
 export const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
 
 /**
+ * Get lens for the given keys
+ *
+ * usage:
+ *   const abLens = projectLens(['a', 'b']);
+ *   R.set(abLens, { a: 11, b: 22 }, obj) //=> {"a": 11, "b": 22, "c": 3}
+ *   R.view(abLens, obj) //=> {"a": 1, "b": 2}
+ */
+export const projectLens = keys => R.lens(R.pick(R.keys), R.flip(R.merge));
+
+/**
  * assocPath work with arrays too
  *
  * R.assocPath(['a', 0, 'b'], 'hi', { a: [{ b: 'hey' }] })

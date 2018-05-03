@@ -58,6 +58,16 @@ export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
 export const list = R.compose(R.flatten, R.unapply(R.identity));
 
 /**
+ * Returns an array containing the value provided.
+ * If value is already an array, it is returned as is.
+ *
+ * usage: ensureArray(42); //=> [42]
+ *        ensureArray([42]); //=> [42]
+ */
+// :: a | [a] -> [a]
+const asArray = R.when(R.complement(R.is(Array)), R.of);
+
+/**
  * Creates list of length `n`. Every item in list equals to `input` parameter.
  *
  * usage replicate(2, 6) // [6, 6]

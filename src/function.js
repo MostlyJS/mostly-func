@@ -19,3 +19,17 @@ export const applyN = R.compose(R.reduceRight(R.compose, R.identity), R.repeat);
 export const applyPath = R.curry((path, fn, obj) =>
   R.assocPath(path, fn(R.path(path, obj)), obj)
 );
+
+/**
+ * This allows you to create functions that work on a heterogenous collection
+ * and return a new collection of the same arity. It is an relative of juxt.
+ * Like juxt it takes a series of functions and returns a new function.
+ * Unlike juxt the resulting function takes a sequence. The functions and
+ * sequence are zipped together and invoked.
+ *
+ * usage:
+ *   const pairs = [["key1", "VAL1"], ["key2", "VAL2"], ["key3", "VAL3"]];
+ *   knit([toUpper, toLower])(pairs);
+ *     //=> [["KEY1", "val1"], ["KEY2", "val2"], ["KEY3", "val3"]]
+ */
+export const knit = R.compose(R.map, R.zipWith(R.call));

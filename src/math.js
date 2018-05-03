@@ -22,4 +22,7 @@ export const rangeStep = (start, step, stop) => R.map(
   R.range(0, (1 + (stop - start) / step) >>> 0)
 );
 
+/**
+ * get range of a number list
+ */
 export const getRange = R.juxt([Math.min, Math.max]);

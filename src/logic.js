@@ -1,4 +1,5 @@
 import _isObject from 'ramda/src/internal/_isObject';
+import _isArray from 'ramda/src/internal/_isObject';
 import R from 'ramda';
 
 /**
@@ -10,6 +11,10 @@ export const isNotEmpty = R.complement(R.isEmpty);
 export const isNull = R.equals(null);
 export const isNotNull = R.complement(isNull);
 export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
+
+// :: * -> Boolean
+export const isArray = Array.isArray || _isArray;
+export const isNotArray = R.complement(isArray);
 
 /**
  * In JavaScript, a `truthy` value is a value that is considered true

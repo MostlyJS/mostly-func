@@ -22,9 +22,12 @@ export const isNumber = _isNumber;
 export const isNotNumber = R.complement(isNumber);
 
 // :: * -> Boolean
+export const isInteger = Number.isInteger;
+export const isNotInteger = R.complement(isInteger);
+
+// :: * -> Boolean
 export const isNaN = Number.isNaN || R.equals(NaN);
 export const isNotNaN = R.complement(isNaN);
-
 
 /**
  * In JavaScript, a `truthy` value is a value that is considered true

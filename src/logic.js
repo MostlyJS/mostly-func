@@ -16,6 +16,10 @@ export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
 export const isArray = Array.isArray || _isArray;
 export const isNotArray = R.complement(isArray);
 
+// :: * -> Boolean
+export const isNaN = Number.isNaN || R.equals(NaN);
+export const isNotNaN = R.complement(isNaN);
+
 /**
  * In JavaScript, a `truthy` value is a value that is considered true
  * when evaluated in a Boolean context. All values are truthy unless

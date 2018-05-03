@@ -423,3 +423,25 @@ export const whereAll = (spec, data) => {
     return whereAll(value, data[key]) ? valid : false;
   }, true);
 };
+
+/**
+ * Makes a shallow clone of an object, overriding the specified property with
+ * the supplied function, applied to the previous value. If no previous value
+ * exists, the function will be given undefined as it's argument.
+ *
+ * Note: that this copies and flattens prototype properties onto the new object
+ * as well. All non-primitive properties are copied by reference.
+ *
+ * usage:
+ *   R.assocWith(inc, 'b', {a: 1, b: 2}); //=> {a: 1, b: 3 }
+ *   R.assocWith(identity, 'c', {a: 1, b: 2}); //=> {a: 1, b: 2, c: undefined}
+ */
+// :: (v -> w) -> String -> {k: v} -> {k: v}
+export const assocWith = R.curryN(3, (fn, prop, obj) => {
+  var result = R.is(Array, obj) ? [] : {};
+  for (var p in obj) {
+    result[p] = obj[p];
+  }
+  result[prop] = fn(result[prop]);
+  return result;
+});

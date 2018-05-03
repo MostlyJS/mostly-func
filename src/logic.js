@@ -33,6 +33,10 @@ export const isNotNaN = R.complement(isNaN);
 export const isFinite = Number.isFinite;
 export const isNotFinite = R.complement(isFinite);
 
+// :: * -> Boolean
+export const isFloat = R.both(isFinite, R.complement(isInteger));
+export const isNotFloat = R.complement(isFloat);
+
 /**
  * In JavaScript, a `truthy` value is a value that is considered true
  * when evaluated in a Boolean context. All values are truthy unless

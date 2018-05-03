@@ -445,3 +445,36 @@ export const assocWith = R.curryN(3, (fn, prop, obj) => {
   result[prop] = fn(result[prop]);
   return result;
 });
+
+
+/**
+ * Makes a shallow clone of an object, setting or overriding the nodes required
+ * to create the given path, and applying the given function to the tail end of
+ * that path. If no previous value exists, undefined will be supplied to the
+ * given function. If the path supplied is an empty list, the whole object will
+ * be applied to the given function.
+ *
+ * Note that this copies and flattens prototype properties onto
+ * the new object as well. All non-primitive properties are copied by reference.
+ *
+ * usage:
+ *   R.assocPathWith(always(42), ['a', 'b', 'c'], {a: {b: {c: 0}}}); //=> {a: {b: {c: 42}}}
+ *   R.assocPathWith(always(42), ['a', 'b', 'c'], {a: 5}); //=> {a: {b: {c: 42}}}
+ *   R.assocPathWith(always(42), [], {a: 5}); //=> 42
+ */
+// :: (v -> w) -> [String] -> {k: v} -> {k: v}
+export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) {
+  switch (path.length) {
+    case 0: return fn(obj);
+    case 1:
+      return assocWith(fn, path[0], obj);
+    default:
+      var idx = path[0];
+      var result = Number.isInteger(idx) ? [] : {};
+      for (var p in obj) {
+        result[p] = obj[p];
+      }
+      result[idx] = assocPathWith(fn, Array.prototype.slice.call(path, 1), result[idx]);
+      return result;
+  }
+});

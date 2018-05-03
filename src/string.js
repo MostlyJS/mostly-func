@@ -24,6 +24,18 @@ export const splitOrArray = R.ifElse(
 );
 
 /**
+ * parse 'null' or 'undefined' string as null
+ */
+export const parseNil = R.cond([
+  [R.equals('null'), R.always(null)],
+  [R.equals('undefined'), R.always(null)],
+  [R.equals('0'), R.always(null)],
+  [R.equals('false'), R.always(null)],
+  [R.equals('NaN'), R.always(null)],
+  [R.T, R.identity]
+]);
+
+/**
  * truncate string to length
  */
 // :: String -> String

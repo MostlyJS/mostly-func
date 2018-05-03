@@ -65,7 +65,7 @@ export const list = R.compose(R.flatten, R.unapply(R.identity));
  *        ensureArray([42]); //=> [42]
  */
 // :: a | [a] -> [a]
-const asArray = R.when(R.complement(R.is(Array)), R.of);
+export const asArray = R.when(R.complement(R.is(Array)), R.of);
 
 /**
  * Creates list of length `n`. Every item in list equals to `input` parameter.

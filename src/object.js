@@ -6,10 +6,10 @@ import R from 'ramda';
 export const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
 
 /**
- * merge with clone
+ * merge with clone and handle the nil
  */
 export const assign = (...objs) => {
-  return mergeDeepAll(R.map(R.clone, objs));
+  return mergeDeepAll(R.map(R.clone, R.reject(R.isNil, objs)));
 };
 
 /**

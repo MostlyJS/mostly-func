@@ -119,6 +119,16 @@ export const count = R.compose(R.length, R.filter);
 export const overhead = R.over(R.lensIndex(0));
 
 /**
+ * find object in a list by prop
+ */
+export const findByProp = (prop, value) => R.find(R.propEq(prop, value));
+
+/**
+ * find object in a list by id
+ */
+export const findById = (id) => R.find(R.propEq('id', id));
+
+/**
  * Pivot a table with a function to resolve conflicts (multiple values
  * for the same attribute)
  *

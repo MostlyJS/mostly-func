@@ -121,12 +121,12 @@ export const overhead = R.over(R.lensIndex(0));
 /**
  * find object in a list by prop
  */
-export const findByProp = (prop, value) => R.find(R.propEq(prop, value));
+export const findByProp = R.curry((prop, value, list) => R.find(R.propEq(prop, value), list));
 
 /**
  * find object in a list by id
  */
-export const findById = (id) => R.find(R.propEq('id', id));
+export const findById = R.curry((id, list) => R.find(R.propEq('id', id), list));
 
 /**
  * Pivot a table with a function to resolve conflicts (multiple values

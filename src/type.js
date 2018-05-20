@@ -13,6 +13,9 @@ export const isNull = R.equals(null);
 export const isNotNull = R.complement(isNull);
 export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
 
+// :: * -> Boolean
+export const isString = fp.is(String);
+export const isNotString = R.complement(isString);
 
 // :: * -> Boolean
 export const isArray = Array.isArray || _isArray;
@@ -49,6 +52,12 @@ export const isHex = R.test(/^[0-9A-F]+$/i);
 export const isObjectId = (str) => {
   return isHex(str) && str.length === 24;
 };
+
+/**
+ * is like an id (string, int, or objectId)
+ */
+export const isIdLike = (val) =>
+  isNotNil(val) && (isInteger(val) || isString(val) || isObjectId(val.toString()));
 
 /**
  * Checks if input value is `Function`.

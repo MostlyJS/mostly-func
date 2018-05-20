@@ -14,7 +14,7 @@ export const isNotNull = R.complement(isNull);
 export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
 
 // :: * -> Boolean
-export const isString = fp.is(String);
+export const isString = R.is(String);
 export const isNotString = R.complement(isString);
 
 // :: * -> Boolean

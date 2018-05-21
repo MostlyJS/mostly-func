@@ -319,6 +319,11 @@ export const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
 // Derivative of R.props for deep fields with dot path
 export const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
 
+// get prop of object if property exists
+export const propOf = R.curryN(2, (prop, obj) =>
+  R.propOr(obj, prop, obj)
+);
+
 /**
  * Get lens for the given keys
  *

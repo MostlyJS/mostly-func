@@ -239,27 +239,6 @@ export const omitRecursively = R.curry((keys, input) => {
 });
 
 /**
- * Returns whether or not an object has an own property with the specified name at a given path.
- *
- * usage:
- *   hasPath(['a', 'b'], { a: { b: 1 } }); //=> true
- *   hasPath([0], [1, 2]); //=> true
- */
-// :: [Idx] -> {a} -> Boolean
-export const hasPath = R.curryN(2, (path, obj) => {
-  const prop = R.head(path);
-  // termination conditions
-  if (R.length(path) === 0 || !R.is(Object, obj)) {
-    return false;
-  } else if (R.length(path) === 1) {
-    return R.has(prop, obj);
-  }
-  return hasPath(R.tail(path), R.path([prop], obj)); // base case
-});
-
-export const hasDotPath = R.useWith(R.hasPath, [R.split('.')]);
-
-/**
  * pick by path
  */
 export const pickPath = R.curry((names, obj) => {
@@ -323,6 +302,32 @@ export const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
 export const propOf = R.curryN(2, (prop, obj) =>
   R.propOr(obj, prop, obj)
 );
+
+// has own prop of object
+export const hasProp = R.curryN(2, (prop, obj) =>
+  R.not(R.isNil(obj)) && R.has(prop, obj)
+);
+
+/**
+ * Returns whether or not an object has an own property with the specified name at a given path.
+ *
+ * usage:
+ *   hasPath(['a', 'b'], { a: { b: 1 } }); //=> true
+ *   hasPath([0], [1, 2]); //=> true
+ */
+// :: [Idx] -> {a} -> Boolean
+export const hasPath = R.curryN(2, (path, obj) => {
+  const prop = R.head(path);
+  // termination conditions
+  if (R.length(path) === 0 || !R.is(Object, obj)) {
+    return false;
+  } else if (R.length(path) === 1) {
+    return R.has(prop, obj);
+  }
+  return hasPath(R.tail(path), R.path([prop], obj)); // base case
+});
+
+export const hasDotPath = R.useWith(R.hasPath, [R.split('.')]);
 
 /**
  * Get lens for the given keys

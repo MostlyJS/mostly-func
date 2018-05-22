@@ -41,6 +41,10 @@ export const isNotFinite = R.complement(isFinite);
 export const isFloat = R.both(isFinite, R.complement(isInteger));
 export const isNotFloat = R.complement(isFloat);
 
+// :: * -> Boolean
+export const isObject = _isObject;
+export const isNotObject = R.complement(isObject);
+
 /**
  * is hexadecimal
  */

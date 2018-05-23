@@ -159,6 +159,11 @@ export const isPlainObject = it => {
 };
 
 /**
+ * map object with (val, key)
+ */
+export const mapWithKey = R.mapObjIndexed;
+
+/**
  * Map keys of an object
  *
  * usage: mapKeys(R.toUpper, { a: 1, b: 2, c: 3 }); // { A: 1, B: 2, C: 3 }

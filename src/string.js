@@ -36,6 +36,19 @@ export const parseNil = R.cond([
 ]);
 
 /**
+ * parse string as boolean
+ */
+export const parseBool = R.cond([
+  [R.equals('null'), R.always(false)],
+  [R.equals('undefined'), R.always(false)],
+  [R.equals('0'), R.always(false)],
+  [R.equals(''), R.always(false)],
+  [R.equals('false'), R.always(false)],
+  [R.equals('NaN'), R.always(false)],
+  [R.T, R.always(true)]
+]);
+
+/**
  * truncate string to length
  */
 // :: String -> String

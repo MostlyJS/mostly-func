@@ -45,7 +45,7 @@ export const parseBool = R.cond([
   [R.equals(''), R.always(false)],
   [R.equals('false'), R.always(false)],
   [R.equals('NaN'), R.always(false)],
-  [R.T, R.always(true)]
+  [R.T, Boolean]
 ]);
 
 /**

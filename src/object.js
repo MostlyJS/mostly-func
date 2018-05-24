@@ -193,10 +193,10 @@ export const mapKeysWithValue = R.useWith(mapKeysAndValues, [wrapMapping, R.iden
 /**
  * Make an object from an array using a mapper function
  *
- * usage: arr2obj(R.reverse, ['abc', 'def'])
+ * usage: objFromArray(R.reverse, ['abc', 'def'])
  * // -> { abc: 'cba', def: 'fed' }
  */
-export const objOfArray = R.curry((fn, arr) =>
+export const objFromArray = R.curry((fn, arr) =>
   R.pipe(
     (list) => list.map(k => [k.toString(), fn(k)]),
     R.fromPairs

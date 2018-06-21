@@ -9,7 +9,7 @@ export const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
  * merge with clone and handle the nil
  */
 export const assignAll = (...objs) => {
-  return mergeDeepAll(R.map(R.clone, R.reject(R.isNil, objs)));
+  return Object.assign({}, ...R.map(R.clone, R.reject(R.isNil, objs)));
 };
 
 /**

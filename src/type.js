@@ -11,7 +11,6 @@ export const isNotNil = R.complement(R.isNil);
 export const isNotEmpty = R.complement(R.isEmpty);
 export const isNull = R.equals(null);
 export const isNotNull = R.complement(isNull);
-export const isValid = R.complement(R.either(R.isNil, R.isEmpty));
 
 // :: * -> Boolean
 export const isString = R.is(String);
@@ -44,6 +43,9 @@ export const isNotFloat = R.complement(isFloat);
 // :: * -> Boolean
 export const isObject = _isObject;
 export const isNotObject = R.complement(isObject);
+
+// :: * -> Boolean
+export const isValid = R.complement(R.anyPass([R.isNil, R.isEmpty, isNaN]));
 
 /**
  * is hexadecimal

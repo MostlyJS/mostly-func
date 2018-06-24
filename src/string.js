@@ -84,7 +84,7 @@ export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
  */
 // :: a -> b -> Boolean
 const reEnds = R.useWith(R.flip(regExp)('gi'), [R.flip(R.concat)('$')]);
-const suffixWith = R.useWith(R.test, [reEnds, R.identity]);
+export const suffixWith = R.useWith(R.test, [reEnds, R.identity]);
 
 /**
  * Splits string into list. Delimiter is every sequence of non-alphanumerical values.

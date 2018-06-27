@@ -10,6 +10,10 @@ Functional library for building Mostly microservices with ramda/sanctuary/flutur
 * Either: [sanctuary-js/sanctuary-either](https://github.com/sanctuary-js/sanctuary-either)
 * Future: [fluture-js/Fluture](https://github.com/fluture-js/Fluture)
 
+# Documentation
+
+Please see the [documentation site](https://mostlyjs.github.io).
+
 # Usage
 
 ## Installation

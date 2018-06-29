@@ -520,7 +520,7 @@ export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) 
  *     'b-z': [{ a: 4, b: 'b', c: 'z' }]
  *   };
  */
-export createIndexOpts = R.curryN(3, (options, keys, objs) => {
+export const indexObjectOpts = R.curryN(3, (options, keys, objs) => {
   options = R.merge({
     unique: false,
     keyDelimiter: '|'
@@ -537,3 +537,4 @@ export createIndexOpts = R.curryN(3, (options, keys, objs) => {
     return objIndex;
   }, {}, objs);
 });
+export const indexObject = indexObjectOpts(null);

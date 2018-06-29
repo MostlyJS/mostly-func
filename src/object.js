@@ -404,7 +404,7 @@ export const sortKeys = R.pipe(R.toPairs, R.sortBy(R.prop(0)), R.fromPairs);
  * spread the dissoced object
  *
  * usage:
- * spread("b", { a: 1, b: { c: 3, d: 4 } }); // -> { a: 1, c: 3, d: 4 }
+ *   spread("b", { a: 1, b: { c: 3, d: 4 } }); // -> { a: 1, c: 3, d: 4 }
  */
 export const spread = R.converge(R.merge, [R.dissoc, R.propOr({})]);
 
@@ -492,4 +492,48 @@ export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) 
       result[idx] = assocPathWith(fn, Array.prototype.slice.call(path, 1), result[idx]);
       return result;
   }
+});
+
+/**
+ * Returns an indexed for an array of objects with the specified options.
+ *
+ * options:
+ *   unique - (default: false) If true then if a key is not unique and Exception is thrown.
+ *   delimiter - (default: |) The delimiter used between object values to build the index key.
+ *       This MUST be a character that is guaranteed to NOT be in the values otherwise the index may not be built properly.
+ *
+ * usage:
+ *   var data = [
+ *     { a: 1, b: 'a', c: 'x' },
+ *     { a: 2, b: 'b', c: 'y' },
+ *     { a: 3, b: 'b', c: 'y' },
+ *     { a: 4, b: 'b', c: 'z' }
+ *   ];
+ *   createIndexOpts({delimiter: '-'}, ['b', 'c'], data);
+ *   =>
+ *   {
+ *     'a-x': [{ a: 1, b: 'a', c: 'x' }],
+ *     'b-y': [
+ *         { a: 2, b: 'b', c: 'y' },
+ *         { a: 3, b: 'b', c: 'y' }
+ *     ],
+ *     'b-z': [{ a: 4, b: 'b', c: 'z' }]
+ *   };
+ */
+export createIndexOpts = R.curryN(3, (options, keys, objs) => {
+  options = R.merge({
+    unique: false,
+    keyDelimiter: '|'
+  }, options || {});
+  return R.reduce((objIndex, obj) => {
+    var indexKey = Ru.pickValues(keys, obj).join(options.keyDelimiter);
+    // create empty entry
+    if (!objIndex[indexKey])
+      objIndex[indexKey] = [];
+    else if (options.unique)
+      throw new Error(`Cannot build unique index (index key: ${indexKey})`);
+    // add to existing entry
+    objIndex[indexKey].push(obj);
+    return objIndex;
+  }, {}, objs);
 });

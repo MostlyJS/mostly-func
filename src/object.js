@@ -495,6 +495,12 @@ export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) 
 });
 
 /**
+ * Picks values from an object using the specified keys. Returns a new array.
+ */
+export const pickValues = (keys, obj) =>
+  R.compose(R.values, R.pick(keys))(obj);
+
+/**
  * Returns an indexed for an array of objects with the specified options.
  *
  * options:
@@ -526,7 +532,7 @@ export const indexObjectOpts = R.curryN(3, (options, keys, objs) => {
     keyDelimiter: '|'
   }, options || {});
   return R.reduce((objIndex, obj) => {
-    var indexKey = Ru.pickValues(keys, obj).join(options.keyDelimiter);
+    var indexKey = pickValues(keys, obj).join(options.keyDelimiter);
     // create empty entry
     if (!objIndex[indexKey])
       objIndex[indexKey] = [];

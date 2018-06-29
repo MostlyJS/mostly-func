@@ -238,6 +238,37 @@ export const sortByProps = (props, list) =>
   R.sort(variadicEither(...R.map(makeComparator, props)), list);
 
 /**
+ * Returns a curried comparator function that can be used with R.sort. Supports any
+ * number of sort orders (i.e. property1 ascending, property 2 descending, etc.).
+ * It also supports type based sorting (i.e. recognizes Date, Number, etc. and
+ * sorts them appropriately).
+ *
+ * The sort order is speicfied with props as string or an array of strings.
+ * Each string signifies a property name to compare. A '+' prefix is used to signify
+ * ascending order and a '-' prefix is used to signify descending order.
+ *
+ * usage: var props = ['-d', '+s', '-n', 'b'];
+ *        R.sort(compareProps(props), list);
+ *
+ */
+export const compareProps = (props, a, b) => {
+  // determine property compare function (lt or gt) based on + or -
+  var propCompares = R.map(prop => prop[0] == '-' ? R.gt : R.lt, props);
+  // remove + and - from property names
+  props = R.map(R.replace(/^(-|\+)/, ''), props);
+  // determine which properties are equal
+  var equalProps = R.map(prop => R.equals(a[prop], b[prop]), props);
+  // find first non-equal property
+  var index = R.findIndex(R.equals(false), equalProps);
+  // if found then compare that property
+  if (index >= 0) {
+    return R.comparator(propCompares[index])(a[props[index]], b[props[index]]);
+  } else {
+    return 0; // return all properties equal
+  }
+};
+
+/**
  * Swaps two elements of `array` having `oldIndex` and `newIndex` indexes.
  */
 // :: Number -> Number -> [a] -> [a]

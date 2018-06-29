@@ -308,6 +308,11 @@ export const propOf = R.curryN(2, (prop, obj) =>
   R.propOr(obj, prop, obj)
 );
 
+// get prop of object if property exists
+export const pathOf = R.curryN(2, (path, obj) =>
+  R.pathOr(obj, path, obj)
+);
+
 // has own prop of object
 export const hasProp = R.curryN(2, (prop, obj) =>
   R.not(R.isNil(obj)) && R.has(prop, obj)

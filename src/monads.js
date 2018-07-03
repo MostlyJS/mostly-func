@@ -56,7 +56,7 @@ export const eitherToPromise = foldEither(
 // :: (() -> b) -> (a -> a) -> Maybe a -> Promise a b
 export const maybeToPromise = R.curry((nothingFn, justFn, maybe) =>
   new Promise((resolve, reject) =>
-    (maybe.isJust ? resolve(maybe.value) : reject())
+    (maybe.isJust? resolve(maybe.value) : reject())
   ).then(justFn, nothingFn)
 );
 
@@ -107,5 +107,5 @@ export const reduceMaybe = reduceM(Maybe.of);
  */
 // :: (a -> c) -> (a -> b) -> a -> Either b c
 export const leftIf = R.curry((condition, leftFn, val) =>
-    condition(val) ? Either.of(val) : S.Left(leftFn(val))
+    condition(val)? Either.of(val) : S.Left(leftFn(val))
 );

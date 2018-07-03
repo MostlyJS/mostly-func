@@ -253,7 +253,7 @@ export const sortByProps = (props, list) =>
  */
 export const compareProps = (props, a, b) => {
   // determine property compare function (lt or gt) based on + or -
-  var propCompares = R.map(prop => prop[0] == '-' ? R.gt : R.lt, props);
+  var propCompares = R.map(prop => prop[0] == '-'? R.gt : R.lt, props);
   // remove + and - from property names
   props = R.map(R.replace(/^(-|\+)/, ''), props);
   // determine which properties are equal

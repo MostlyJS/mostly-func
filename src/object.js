@@ -207,7 +207,7 @@ export const objFromArray = R.curry((fn, arr) =>
  * Like `R.objOf` but returns empty object {} if value is `null` or `undefined`
  */
 // :: String -> a -> StrMap a
-export const optObjOf = R.curry((key, val) => (val == null ? {} : { [key]: val }));
+export const optObjOf = R.curry((key, val) => (val == null? {} : { [key]: val }));
 
 /**
  * Get object size
@@ -440,7 +440,7 @@ export const whereAll = (spec, data) => {
     if (typeof value === "function" && !value(data[key])) {
       return false;
     }
-    return whereAll(value, data[key]) ? valid : false;
+    return whereAll(value, data[key])? valid : false;
   }, true);
 };
 
@@ -458,7 +458,7 @@ export const whereAll = (spec, data) => {
  */
 // :: (v -> w) -> String -> {k: v} -> {k: v}
 export const assocWith = R.curryN(3, (fn, prop, obj) => {
-  var result = R.is(Array, obj) ? [] : {};
+  var result = R.is(Array, obj)? [] : {};
   for (var p in obj) {
     result[p] = obj[p];
   }
@@ -490,7 +490,7 @@ export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) 
       return assocWith(fn, path[0], obj);
     default:
       var idx = path[0];
-      var result = Number.isInteger(idx) ? [] : {};
+      var result = Number.isInteger(idx)? [] : {};
       for (var p in obj) {
         result[p] = obj[p];
       }

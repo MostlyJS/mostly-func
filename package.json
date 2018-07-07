@@ -24,7 +24,7 @@
     "url": "https://github.com/MostlyJS/mostly-func/issues"
   },
   "dependencies": {
-    "esm": "^3.0.14",
+    "esm": "^3.0.63",
     "fluture": "^8.0.2",
     "folktale": "^2.1.0",
     "ramda": "^0.24.1",

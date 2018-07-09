@@ -101,9 +101,19 @@ export const reduceIndexed = R.addIndex(R.reduce);
  * Pick values a from list by indexes
  *
  * usage: pickIndexes([0, 2], ['a', 'b', 'c']); // => ['a', 'c']
- *
+ */
 // :: [Number] -> [a] -> [a]
 export const pickIndexes = R.compose(R.values, R.pickAll);
+
+/**
+ * Create a new object from a list objects by picking key and value
+ *
+ * usage:
+ *   var list = [{ id: 'a', val: 1000 }, { id: 'b', val: 2000 }];
+ *   pickFrom('id', 'val', list); // => { 'a': 1000, 'b': 2000 }
+ */
+export const pickFrom = R.curry((key, val, list) =>
+  R.reduce((acc, i) => R.assoc(i[key], i[val], acc), {}, list));
 
 /**
  * Count members of the given filterable which satisfy the given predicate

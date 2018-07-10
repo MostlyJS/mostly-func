@@ -1,11 +1,11 @@
-import R from 'ramda';
+const R = require('ramda');
 
 /**
  * Split path to get head or tail
  */
-export const splitHead = R.compose(R.head, R.split('.'));
-export const splitTail = R.compose(R.join('.'), R.tail, R.split('.'));
-export const capitalize = R.replace(/^./, R.toUpper);
+const splitHead = R.compose(R.head, R.split('.'));
+const splitTail = R.compose(R.join('.'), R.tail, R.split('.'));
+const capitalize = R.replace(/^./, R.toUpper);
 
 /**
  * Always get an array of a possible input.
@@ -13,7 +13,7 @@ export const capitalize = R.replace(/^./, R.toUpper);
  * if it is already an array, return itself;
  * if it is an object, wrap it in an array.
  */
-export const splitOrArray = R.ifElse(
+const splitOrArray = R.ifElse(
   R.is(Array),
   R.identity,
   R.ifElse(
@@ -26,7 +26,7 @@ export const splitOrArray = R.ifElse(
 /**
  * parse 'null' or 'undefined' string as null
  */
-export const parseNil = R.cond([
+const parseNil = R.cond([
   [R.equals('null'), R.always(null)],
   [R.equals('undefined'), R.always(null)],
   [R.equals('0'), R.always(null)],
@@ -38,7 +38,7 @@ export const parseNil = R.cond([
 /**
  * parse string as boolean
  */
-export const parseBool = R.cond([
+const parseBool = R.cond([
   [R.equals('null'), R.always(false)],
   [R.equals('undefined'), R.always(false)],
   [R.equals('0'), R.always(false)],
@@ -52,7 +52,7 @@ export const parseBool = R.cond([
  * truncate string to length
  */
 // :: String -> String
-export const truncate = lenth => R.when(
+const truncate = lenth => R.when(
   R.propSatisfies(R.gt(R.__, lenth), 'length'),
   R.pipe(R.take(lenth), R.append('…'), R.join(''))
 );
@@ -62,7 +62,7 @@ export const truncate = lenth => R.when(
  *
  * usage: R.test(regExp('end$', 'gi'), 'in the end') // true
  */
-export const regExp = R.constructN(2, RegExp);
+const regExp = R.constructN(2, RegExp);
 
 /**
  * Testing string if starts with some prefix.
@@ -73,7 +73,7 @@ export const regExp = R.constructN(2, RegExp);
  */
 // :: a -> b -> Boolean
 const reStarts = R.useWith(R.flip(regExp)('gi'), [R.concat('^')]);
-export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
+const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
 
 /**
  * Testing string if ends with some suffix.
@@ -84,7 +84,7 @@ export const prefixWith = R.useWith(R.test, [reStarts, R.identity]);
  */
 // :: a -> b -> Boolean
 const reEnds = R.useWith(R.flip(regExp)('gi'), [R.flip(R.concat)('$')]);
-export const suffixWith = R.useWith(R.test, [reEnds, R.identity]);
+const suffixWith = R.useWith(R.test, [reEnds, R.identity]);
 
 /**
  * Splits string into list. Delimiter is every sequence of non-alphanumerical values.
@@ -92,19 +92,19 @@ export const suffixWith = R.useWith(R.test, [reEnds, R.identity]);
  * usage: splitAlphameric('Hello    world/1'); // ['Hello', 'world', '1']
  */
 // :: String -> [String]
-export const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zA-Z0-9]+/g));
+const splitAlphameric = R.o(R.reject(R.equals('')), R.split(/[^a-zA-Z0-9]+/g));
 
 /**
  * Split string on caplital letters
  */
 // :: String -> [String]
-export const splitCapital = R.split(/(?=[A-Z])/); // positive lookahead to split by the capital letters
+const splitCapital = R.split(/(?=[A-Z])/); // positive lookahead to split by the capital letters
 
 /**
  * Split string on caplital letters and non-alphanumerical values
  */
 // :: String -> [String]
-export const splitCapitalAlphameric = R.o(R.chain(splitCapital), splitAlphameric);
+const splitCapitalAlphameric = R.o(R.chain(splitCapital), splitAlphameric);
 
 /**
  * Decapitalize first letter.
@@ -112,14 +112,14 @@ export const splitCapitalAlphameric = R.o(R.chain(splitCapital), splitAlphameric
  * usage: lowerFirst('HELLO WORLD') // 'hELLO WORLD'
  */
 // :: String -> String
-export const lowerFirst = R.o(R.join(''), R.adjust(R.toLower, 0));
+const lowerFirst = R.o(R.join(''), R.adjust(R.toLower, 0));
 
 /**
  * Capitalize first letter.
  * uage: upperFirst('hello world') // 'Hello world'
  */
 // :: String -> String
-export const upperFirst = R.o(R.join(''), R.adjust(R.toUpper, 0));
+const upperFirst = R.o(R.join(''), R.adjust(R.toUpper, 0));
 
 /**
  * Converts string into dot.case.
@@ -130,7 +130,7 @@ export const upperFirst = R.o(R.join(''), R.adjust(R.toUpper, 0));
  *        dotCase('helloWorld/ ')  // 'hello.world'
  */
 // :: String -> String
-export const dotCase = R.o(
+const dotCase = R.o(
   R.join('.'),
   R.o(R.map(R.toLower), splitCapitalAlphameric)
 );
@@ -144,7 +144,7 @@ export const dotCase = R.o(
  *        kebabCase('helloWorld/ ')  // 'hello-world'
  */
  // :: String -> String
-export const kebabCase = R.o(
+const kebabCase = R.o(
   R.join('-'),
   R.o(R.map(R.toLower), splitCapitalAlphameric)
 );
@@ -158,7 +158,7 @@ export const kebabCase = R.o(
  *        pascalCase('helloWorld/ ')  // 'HelloWorld'
  */
 // :: String -> String
-export const pascalCase = R.o(
+const pascalCase = R.o(
   R.join(''),
   R.o(R.map(upperFirst), splitCapitalAlphameric)
 );
@@ -172,7 +172,7 @@ export const pascalCase = R.o(
  *        camelCase('HelloWorld/ ')  // 'helloWorld'
  */
  // :: String -> String
-export const camelCase = R.o(lowerFirst, pascalCase);
+const camelCase = R.o(lowerFirst, pascalCase);
 
 /**
  * Converts string into snake_case.
@@ -183,7 +183,30 @@ export const camelCase = R.o(lowerFirst, pascalCase);
  *        snakeCase('HelloWorld/ ')  // 'hello_world'
  */
 // :: String -> String
-export const snakeCase = R.o(
+const snakeCase = R.o(
   R.join('_'),
   R.o(R.map(R.toLower), splitCapitalAlphameric)
 );
+
+module.exports = {
+  camelCase,
+  capitalize,
+  dotCase,
+  kebabCase,
+  lowerFirst,
+  parseBool,
+  parseNil,
+  pascalCase,
+  prefixWith,
+  regExp,
+  snakeCase,
+  splitAlphameric,
+  splitCapital,
+  splitCapitalAlphameric,
+  splitHead,
+  splitOrArray,
+  splitTail,
+  suffixWith,
+  truncate,
+  upperFirst
+};

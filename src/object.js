@@ -1,14 +1,14 @@
-import R from 'ramda';
+const R = require('ramda');
 
 /**
  * merge deep with all
  */
-export const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
+const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
 
 /**
  * merge with clone and handle the nil
  */
-export const assignAll = (...objs) => {
+const assignAll = (...objs) => {
   return Object.assign({}, ...R.map(R.clone, R.reject(R.isNil, objs)));
 };
 
@@ -21,7 +21,7 @@ export const assignAll = (...objs) => {
  *  // => { bar: "not 2", baz: 3}
  */
 // :: Object -> Object -> Object
-export const subtractObject = R.uncurryN(2, objToSubstract =>
+const subtractObject = R.uncurryN(2, objToSubstract =>
   R.converge(R.omit, [
     R.compose(
       R.keys,
@@ -41,7 +41,7 @@ export const subtractObject = R.uncurryN(2, objToSubstract =>
  * @return {Object} An object whose keys are the first elements of the entries
  *     and whose values are the second elements of the entries.
  */
-export const arrayAsObject = entries => entries.reduce((o, [k, v]) => (o[k] = v, o), {});
+const arrayAsObject = entries => entries.reduce((o, [k, v]) => (o[k] = v, o), {});
 
 /**
  * Convert object to an array of key-value pairs
@@ -50,7 +50,7 @@ export const arrayAsObject = entries => entries.reduce((o, [k, v]) => (o[k] = v,
  * // [{"key": 2, "value": "I"}, {"key": 4, "value": "it"}, {"key": 1, "value": "that"}]
  */
 // :: {a} -> [{ key :: String, value :: a }]
-export const objectAsArray = R.curry((keys, obj) =>
+const objectAsArray = R.curry((keys, obj) =>
   R.compose(R.map(R.zipObj(keys)), R.toPairs)(obj)
 );
 
@@ -74,7 +74,7 @@ const groupObjBy = R.curry(R.pipe(
   R.map(R.fromPairs)
 ));
 
-export const diffObjs = R.pipe(
+const diffObjs = R.pipe(
   R.useWith(R.mergeWith(R.merge), [R.map(R.objOf("left")), R.map(R.objOf("right"))]),
   groupObjBy(R.cond([
     [
@@ -100,7 +100,7 @@ export const diffObjs = R.pipe(
  *     {red: 3, blue: 5, green: 5, yellow: 2}
  *   ); //=> {red: 3, green: 5}
  */
-export const filterWithKeys = R.curry((pred, obj) =>
+const filterWithKeys = R.curry((pred, obj) =>
   R.compose(R.fromPairs, R.filter(R.apply(pred)), R.toPairs)(obj)
 );
 
@@ -110,7 +110,7 @@ export const filterWithKeys = R.curry((pred, obj) =>
  * it will return only one, first matched.
  */
 // :: a -> Map b a -> b
-export const findKeyOfValue = R.curry((val, obj) =>
+const findKeyOfValue = R.curry((val, obj) =>
   R.compose(
     R.nth(0),
     R.find(R.compose(R.equals(val), R.nth(1))),
@@ -122,7 +122,7 @@ export const findKeyOfValue = R.curry((val, obj) =>
  * Get object by id
  */
 // :: String -> Array -> Object
-export const findById = R.converge(
+const findById = R.converge(
   R.find,
   [R.pipe(R.nthArg(0), R.propEq("id")), R.nthArg(1)]
 );
@@ -133,7 +133,7 @@ export const findById = R.converge(
  * usage: flattenObj({a:1, b:{c:3}, d:{e:{f:6}, g:[{h:8, i:9}, 0]}})
  * //=> {"a": 1, "b.c": 3, "d.e.f": 6, "d.g.0.h": 8, "d.g.0.i": 9, "d.g.1": 0}
  */
-export const flattenObj = function () {
+const flattenObj = function () {
   const go = obj_ => R.chain(([k, v]) => {
     if (typeof v == 'object') {
       return R.map(([k_, v_]) => [`${k}.${k_}`, v_], go(v));
@@ -151,7 +151,7 @@ export const flattenObj = function () {
  * @param {any} it - The value to check whether or not it's a plain object.
  * @return {boolean} True if it's a plain object.
  */
-export const isPlainObject = it => {
+const isPlainObject = it => {
   return it !== null
     && typeof it === "object"
     && (!it.constructor || it.constructor === Object)
@@ -161,14 +161,14 @@ export const isPlainObject = it => {
 /**
  * map object with (val, key)
  */
-export const mapWithKey = R.mapObjIndexed;
+const mapWithKey = R.mapObjIndexed;
 
 /**
  * Map keys of an object
  *
  * usage: mapKeys(R.toUpper, { a: 1, b: 2, c: 3 }); // { A: 1, B: 2, C: 3 }
  */
-export const mapKeys = R.curry((fn, obj) =>
+const mapKeys = R.curry((fn, obj) =>
   R.fromPairs(R.map(R.adjust(fn, 0), R.toPairs(obj)))
 );
 
@@ -179,7 +179,7 @@ export const mapKeys = R.curry((fn, obj) =>
  *        // { bar: "foo", boo: "baz" }
  */
 // :: ([a] -> [b]) -> Object -> Object
-export const mapKeysAndValues = R.useWith(R.compose(R.fromPairs, R.map), [R.identity, R.toPairs]);
+const mapKeysAndValues = R.useWith(R.compose(R.fromPairs, R.map), [R.identity, R.toPairs]);
 
 /**
  * Map object keys. Mapping functions have both key and value as arguments.
@@ -188,7 +188,7 @@ export const mapKeysAndValues = R.useWith(R.compose(R.fromPairs, R.map), [R.iden
  */
 // :: ((String, a) -> b) -> Object -> Object
 const wrapMapping = R.compose(R.juxt, R.flip(R.prepend)([R.last]), R.apply);
-export const mapKeysWithValue = R.useWith(mapKeysAndValues, [wrapMapping, R.identity]);
+const mapKeysWithValue = R.useWith(mapKeysAndValues, [wrapMapping, R.identity]);
 
 /**
  * Make an object from an array using a mapper function
@@ -196,7 +196,7 @@ export const mapKeysWithValue = R.useWith(mapKeysAndValues, [wrapMapping, R.iden
  * usage: objFromArray(R.reverse, ['abc', 'def'])
  * // -> { abc: 'cba', def: 'fed' }
  */
-export const objFromArray = R.curry((fn, arr) =>
+const objFromArray = R.curry((fn, arr) =>
   R.pipe(
     (list) => list.map(k => [k.toString(), fn(k)]),
     R.fromPairs
@@ -207,13 +207,13 @@ export const objFromArray = R.curry((fn, arr) =>
  * Like `R.objOf` but returns empty object {} if value is `null` or `undefined`
  */
 // :: String -> a -> StrMap a
-export const optObjOf = R.curry((key, val) => (val == null? {} : { [key]: val }));
+const optObjOf = R.curry((key, val) => (val == null? {} : { [key]: val }));
 
 /**
  * Get object size
  */
 // :: Object -> Number
-export const objSize = R.nAry(1, R.pipe(
+const objSize = R.nAry(1, R.pipe(
   R.when(R.is(Object), R.keys),
   R.when(R.is(Boolean), R.cond([[R.equals(false), R.always(null)], [R.T, R.always(1)]])),
   R.when(R.is(Number), R.toString),
@@ -226,7 +226,7 @@ export const objSize = R.nAry(1, R.pipe(
  * usage: omitWhen(R.equals(2), ['a', 'c'], { a: 1, b: 1, c: 2, d: 2 });
  * // => { a: 1, b: 1, d: 2 }
  */
-export const omitWhen = R.curry((fn, ks, obj) =>
+const omitWhen = R.curry((fn, ks, obj) =>
   R.merge(R.omit(ks, obj), R.reject(fn, R.pick(ks, obj))));
 
 /*
@@ -234,7 +234,7 @@ export const omitWhen = R.curry((fn, ks, obj) =>
  * an input.
  */
 // :: [String] -> a -> a
-export const omitRecursively = R.curry((keys, input) => {
+const omitRecursively = R.curry((keys, input) => {
   const isPlainObject = R.both(R.is(Object), R.complement(R.is(Array)));
 
   return R.compose(
@@ -246,7 +246,7 @@ export const omitRecursively = R.curry((keys, input) => {
 /**
  * pick by path
  */
-export const pickPath = R.curry((names, obj) => {
+const pickPath = R.curry((names, obj) => {
   return R.reduce((acc, path) => {
     path = path.split('.');
     return R.assocPath(path, R.path(path, obj), acc);
@@ -256,7 +256,7 @@ export const pickPath = R.curry((names, obj) => {
 /**
  * dissoc fields by path
  */
-export const dissocPaths = (names, obj) => {
+const dissocPaths = (names, obj) => {
   return R.reduce((acc, path) => {
     path = path.split('.');
     return R.dissocPath(path, acc);
@@ -275,7 +275,7 @@ export const dissocPaths = (names, obj) => {
  *   methodNames(obj); // => ['bar', 'baz']
  */
 // :: methodNames :: Object -> [String]
-export const methodNames = R.compose(R.keys, R.pickBy(R.is(Function)));
+const methodNames = R.compose(R.keys, R.pickBy(R.is(Function)));
 
 /**
  * Convert a list of property-lists (with header) into a list of objects
@@ -292,29 +292,29 @@ export const methodNames = R.compose(R.keys, R.pickBy(R.is(Function)));
  *   //  {"age": 45, "drink": "water", "name": "maggie"}
  *   //]
  */
-export const propertyList = R.compose(R.apply(R.lift(R.zipObj)), R.splitAt(1));
+const propertyList = R.compose(R.apply(R.lift(R.zipObj)), R.splitAt(1));
 
-export const dotPath = R.useWith(R.path, [R.split('.')]);
+const dotPath = R.useWith(R.path, [R.split('.')]);
 
-export const dotPathEq = R.useWith(R.pathEq, [R.split('.')]);
+const dotPathEq = R.useWith(R.pathEq, [R.split('.')]);
 
-export const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
+const assocDotPath = R.useWith(R.assocPath, [R.split('.')]);
 
 // Derivative of R.props for deep fields with dot path
-export const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
+const propsPath = R.useWith(R.ap, [R.map(dotPath), R.of]);
 
 // get prop of object if property exists
-export const propOf = R.curryN(2, (prop, obj) =>
+const propOf = R.curryN(2, (prop, obj) =>
   R.propOr(obj, prop, obj)
 );
 
 // get prop of object if property exists
-export const pathOf = R.curryN(2, (path, obj) =>
+const pathOf = R.curryN(2, (path, obj) =>
   R.pathOr(obj, path, obj)
 );
 
 // has own prop of object
-export const hasProp = R.curryN(2, (prop, obj) =>
+const hasProp = R.curryN(2, (prop, obj) =>
   R.not(R.isNil(obj)) && R.has(prop, obj)
 );
 
@@ -326,7 +326,7 @@ export const hasProp = R.curryN(2, (prop, obj) =>
  *   hasPath([0], [1, 2]); //=> true
  */
 // :: [Idx] -> {a} -> Boolean
-export const hasPath = R.curryN(2, (path, obj) => {
+const hasPath = R.curryN(2, (path, obj) => {
   const prop = R.head(path);
   // termination conditions
   if (R.length(path) === 0 || !R.is(Object, obj)) {
@@ -337,7 +337,7 @@ export const hasPath = R.curryN(2, (path, obj) => {
   return hasPath(R.tail(path), R.path([prop], obj)); // base case
 });
 
-export const hasDotPath = R.useWith(R.hasPath, [R.split('.')]);
+const hasDotPath = R.useWith(R.hasPath, [R.split('.')]);
 
 /**
  * Get lens for the given keys
@@ -347,7 +347,7 @@ export const hasDotPath = R.useWith(R.hasPath, [R.split('.')]);
  *   R.set(abLens, { a: 11, b: 22 }, obj) //=> {"a": 11, "b": 22, "c": 3}
  *   R.view(abLens, obj) //=> {"a": 1, "b": 2}
  */
-export const projectLens = keys => R.lens(R.pick(R.keys), R.flip(R.merge));
+const projectLens = keys => R.lens(R.pick(R.keys), R.flip(R.merge));
 
 /**
  * assocPath work with arrays too
@@ -358,7 +358,7 @@ export const projectLens = keys => R.lens(R.pick(R.keys), R.flip(R.merge));
  * R.setPath(['a', 0, 'b'], 'hi', { a: [{ b: 'hey' }] })
  * // => { a: [{ b: 'hi' }] }
  */
-export const setPath = R.curry((path, val, obj) => R.compose(
+const setPath = R.curry((path, val, obj) => R.compose(
   R.set(R.__, val, obj),
   R.apply(R.compose),
   R.map(R.cond([
@@ -367,7 +367,7 @@ export const setPath = R.curry((path, val, obj) => R.compose(
   ]))
 )(path));
 
-export const setDotPath = R.useWith(setPath, [R.split('.')]);
+const setDotPath = R.useWith(setPath, [R.split('.')]);
 
 /**
  * Creates a new object with the own properties of the provided object, but the
@@ -381,7 +381,7 @@ export const setDotPath = R.useWith(setPath, [R.split('.')]);
  *        renameKeys({ firstName: 'name', type: 'kind' })(input) // //=> { name: 'Elisia', kind: 'human' }
  */
 // :: {a: b} -> {a: *} -> {b: *}
-export const renameKeys = R.curry((keysMap, obj) =>
+const renameKeys = R.curry((keysMap, obj) =>
   R.reduce((acc, key) =>
     R.assoc(keysMap[key] || key, obj[key], acc), {}, R.keys(obj)));
 
@@ -390,7 +390,7 @@ export const renameKeys = R.curry((keysMap, obj) =>
  *
  * usage: renameBy(R.concat('a'), { A: 1, B: 2, C: 3 }) // { aA: 1, aB: 2, aC: 3 }
  */
-export const renameKeysBy = R.curry((fn, obj) =>
+const renameKeysBy = R.curry((fn, obj) =>
   R.pipe(R.toPairs, R.map(R.adjust(fn, 0)), R.fromPairs)(obj));
 
 /**
@@ -398,12 +398,12 @@ export const renameKeysBy = R.curry((fn, obj) =>
  * E.G. { a: 'abc' } will become { abc: 'a' }
  */
 // :: Map a b -> Map b a
-export const invertMap = R.compose(R.fromPairs, R.map(R.reverse), R.toPairs);
+const invertMap = R.compose(R.fromPairs, R.map(R.reverse), R.toPairs);
 
 /**
  * Sort object key
  */
-export const sortKeys = R.pipe(R.toPairs, R.sortBy(R.prop(0)), R.fromPairs);
+const sortKeys = R.pipe(R.toPairs, R.sortBy(R.prop(0)), R.fromPairs);
 
 /**
  * spread the dissoced object
@@ -411,7 +411,7 @@ export const sortKeys = R.pipe(R.toPairs, R.sortBy(R.prop(0)), R.fromPairs);
  * usage:
  *   spread("b", { a: 1, b: { c: 3, d: 4 } }); // -> { a: 1, c: 3, d: 4 }
  */
-export const spread = R.converge(R.merge, [R.dissoc, R.propOr({})]);
+const spread = R.converge(R.merge, [R.dissoc, R.propOr({})]);
 
 /**
  * An alternative to Ramda's `where` that has the following differences:
@@ -428,7 +428,7 @@ export const spread = R.converge(R.merge, [R.dissoc, R.propOr({})]);
  * @param {any} data - Data to be validated.
  * @return {boolean} True if the data passed the specification.
  */
-export const whereAll = (spec, data) => {
+const whereAll = (spec, data) => {
   if (typeof data === "undefined") return typeof spec === "boolean" && !spec;
   if (spec === null) return true;
   if (spec === false) return false;
@@ -457,7 +457,7 @@ export const whereAll = (spec, data) => {
  *   R.assocWith(identity, 'c', {a: 1, b: 2}); //=> {a: 1, b: 2, c: undefined}
  */
 // :: (v -> w) -> String -> {k: v} -> {k: v}
-export const assocWith = R.curryN(3, (fn, prop, obj) => {
+const assocWith = R.curryN(3, (fn, prop, obj) => {
   var result = R.is(Array, obj)? [] : {};
   for (var p in obj) {
     result[p] = obj[p];
@@ -483,7 +483,7 @@ export const assocWith = R.curryN(3, (fn, prop, obj) => {
  *   R.assocPathWith(always(42), [], {a: 5}); //=> 42
  */
 // :: (v -> w) -> [String] -> {k: v} -> {k: v}
-export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) {
+const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) {
   switch (path.length) {
     case 0: return fn(obj);
     case 1:
@@ -502,7 +502,7 @@ export const assocPathWith = R.curryN(3, function assocPathWith (fn, path, obj) 
 /**
  * Picks values from an object using the specified keys. Returns a new array.
  */
-export const pickValues = (keys, obj) =>
+const pickValues = (keys, obj) =>
   R.compose(R.values, R.pick(keys))(obj);
 
 /**
@@ -531,7 +531,7 @@ export const pickValues = (keys, obj) =>
  *     'b-z': [{ a: 4, b: 'b', c: 'z' }]
  *   };
  */
-export const indexObjectOpts = R.curryN(3, (options, keys, objs) => {
+const indexObjectOpts = R.curryN(3, (options, keys, objs) => {
   options = R.merge({
     unique: false,
     keyDelimiter: '|'
@@ -548,4 +548,55 @@ export const indexObjectOpts = R.curryN(3, (options, keys, objs) => {
     return objIndex;
   }, {}, objs);
 });
-export const indexObject = indexObjectOpts(null);
+const indexObject = indexObjectOpts(null);
+
+module.exports = {
+  arrayAsObject,
+  assignAll,
+  assocDotPath,
+  assocPathWith,
+  assocWith,
+  diffObjs,
+  dissocPaths,
+  dotPath,
+  dotPathEq,
+  filterWithKeys,
+  findById,
+  findKeyOfValue,
+  flattenObj,
+  groupObjBy,
+  hasDotPath,
+  hasPath,
+  hasProp,
+  indexObject,
+  indexObjectOpts,
+  invertMap,
+  isPlainObject,
+  mapKeys,
+  mapKeysAndValues,
+  mapKeysWithValue,
+  mapWithKey,
+  mergeDeepAll,
+  methodNames,
+  objectAsArray,
+  objFromArray,
+  objSize,
+  omitRecursively,
+  omitWhen,
+  optObjOf,
+  pathOf,
+  pickPath,
+  pickValues,
+  projectLens,
+  propertyList,
+  propOf,
+  propsPath,
+  renameKeys,
+  renameKeysBy,
+  setDotPath,
+  setPath,
+  sortKeys,
+  spread,
+  subtractObject,
+  whereAll
+};

@@ -1,23 +1,23 @@
-import R from 'ramda';
+const R = require('ramda');
 
-export const subtractBy = R.flip(R.subtract);
-export const divideBy = R.flip(R.divide);
-export const moduloBy = R.flip(R.modulo);
+const divideBy = R.flip(R.divide);
+const moduloBy = R.flip(R.modulo);
+const subtractBy = R.flip(R.subtract);
 
-export const average = R.converge(R.divide, [R.sum, R.length]);
-
-// :: Number -> Boolean
-export const isOdd = R.o(Boolean, R.modulo(2));
+const average = R.converge(R.divide, [R.sum, R.length]);
 
 // :: Number -> Boolean
-export const isEven = R.o(R.not, R.isOdd);
+const isOdd = R.o(Boolean, R.modulo(2));
+
+// :: Number -> Boolean
+const isEven = R.o(R.not, R.isOdd);
 
 /**
  * Create an incrementing or decrementing range of numbers with a step
  *
  * usage: rangeStep(2, 2, 8);   // [2, 4, 6, 8]
  */
-export const rangeStep = (start, step, stop) => R.map(
+const rangeStep = (start, step, stop) => R.map(
   n => start + step * n,
   R.range(0, (1 + (stop - start) / step) >>> 0)
 );
@@ -25,4 +25,15 @@ export const rangeStep = (start, step, stop) => R.map(
 /**
  * get range of a number list
  */
-export const getRange = R.juxt([Math.min, Math.max]);
+const getRange = R.juxt([Math.min, Math.max]);
+
+module.exports = {
+  average,
+  divideBy,
+  getRange,
+  isEven,
+  isOdd,
+  moduloBy,
+  rangeStep,
+  subtractBy
+};

@@ -1,14 +1,14 @@
-import R from 'ramda';
+const R = require('ramda');
 
 /**
  * Some convenient complement
  */
-export const isNotEquals = R.both(R.complement(R.isNil), R.complement(R.equals));
+const isNotEquals = R.both(R.complement(R.isNil), R.complement(R.equals));
 
 /**
  * Is mongo objectId/string equals with another
  */
-export const idEquals = R.curry((a, b) => {
+const idEquals = R.curry((a, b) => {
   if (a && typeof a.equals === 'function') return a.equals(b);
   if (b && typeof b.equals === 'function') return b.equals(a);
   return R.equals(a, b);
@@ -17,15 +17,15 @@ export const idEquals = R.curry((a, b) => {
 /**
  * Returns true if prop equals as mongo objectId/string
  */
-export const idPropEq = R.curry((name, val, obj) =>
+const idPropEq = R.curry((name, val, obj) =>
   R.propSatisfies(idEquals(val), name, obj)
 );
-export const idPropNe = R.complement(idPropEq);
+const idPropNe = R.complement(idPropEq);
 
 /**
  * compare length of list
  */
-export const compareLength = R.useWith(R.__, [R.identity, R.length]);
+const compareLength = R.useWith(R.__, [R.identity, R.length]);
 
 /**
  * Returns true if length of array equals first argument
@@ -34,7 +34,7 @@ export const compareLength = R.useWith(R.__, [R.identity, R.length]);
  *        lengthEq(1, [])   // false
  */
 // :: Number -> [a] -> Boolean
-export const lengthEq = compareLength(R.equals);
+const lengthEq = compareLength(R.equals);
 
 /**
  * Returns true if length of array is smaller than first argument
@@ -43,8 +43,8 @@ export const lengthEq = compareLength(R.equals);
  *        lengthGt(2, [{}, {}]) // false
  */
 // :: Number -> [a] -> Boolean
-export const lengthGt = compareLength(R.gt);
-export const lengthGte = compareLength(R.gte);
+const lengthGt = compareLength(R.gt);
+const lengthGte = compareLength(R.gte);
 
 /**
  * Returns true if length of array is bigger than first argument
@@ -54,5 +54,18 @@ export const lengthGte = compareLength(R.gte);
  *
  * @sig Number -> [a] -> Boolean
  */
-export const lengthLt = compareLength(R.lt);
-export const lengthLte = compareLength(R.lte);
+const lengthLt = compareLength(R.lt);
+const lengthLte = compareLength(R.lte);
+
+module.exports = {
+  compareLength,
+  idEquals,
+  idPropEq,
+  idPropNe,
+  isNotEquals,
+  lengthEq,
+  lengthGt,
+  lengthGte,
+  lengthLt,
+  lengthLte
+};

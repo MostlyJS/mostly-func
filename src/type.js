@@ -1,101 +1,100 @@
-import _isArray from 'ramda/src/internal/_isObject';
-import _isNumber from 'ramda/src/internal/_isNumber';
-import _isObject from 'ramda/src/internal/_isObject';
-import R from 'ramda';
+const _isArray = require('ramda/src/internal/_isObject');
+const _isNumber = require('ramda/src/internal/_isNumber');
+const _isObject = require('ramda/src/internal/_isObject');
+const R = require('ramda');
 
 /**
  * some convenient complement
  */
-export const hasNot = R.complement(R.has);
-export const isNotNil = R.complement(R.isNil);
-export const isNotEmpty = R.complement(R.isEmpty);
-export const isNull = R.equals(null);
-export const isNotNull = R.complement(isNull);
+const hasNot = R.complement(R.has);
+const isNotNil = R.complement(R.isNil);
+const isNotEmpty = R.complement(R.isEmpty);
+const isNull = R.equals(null);
+const isNotNull = R.complement(isNull);
 
 // :: * -> Boolean
-export const isString = R.is(String);
-export const isNotString = R.complement(isString);
+const isString = R.is(String);
+const isNotString = R.complement(isString);
 
 // :: * -> Boolean
-export const isArray = Array.isArray || _isArray;
-export const isNotArray = R.complement(isArray);
+const isArray = Array.isArray || _isArray;
+const isNotArray = R.complement(isArray);
 
 // :: * -> Boolean
-export const isNumber = _isNumber;
-export const isNotNumber = R.complement(isNumber);
+const isNumber = _isNumber;
+const isNotNumber = R.complement(isNumber);
 
 // :: * -> Boolean
-export const isInteger = Number.isInteger;
-export const isNotInteger = R.complement(isInteger);
+const isInteger = Number.isInteger;
+const isNotInteger = R.complement(isInteger);
 
 // :: * -> Boolean
-export const isNaN = Number.isNaN || R.equals(NaN);
-export const isNotNaN = R.complement(isNaN);
+const isNaN = Number.isNaN || R.equals(NaN);
+const isNotNaN = R.complement(isNaN);
 
 // :: * -> Boolean
-export const isFinite = Number.isFinite;
-export const isNotFinite = R.complement(isFinite);
+const isFinite = Number.isFinite;
+const isNotFinite = R.complement(isFinite);
 
 // :: * -> Boolean
-export const isFloat = R.both(isFinite, R.complement(isInteger));
-export const isNotFloat = R.complement(isFloat);
+const isFloat = R.both(isFinite, R.complement(isInteger));
+const isNotFloat = R.complement(isFloat);
 
 // :: * -> Boolean
-export const isObject = _isObject;
-export const isNotObject = R.complement(isObject);
+const isObject = _isObject;
+const isNotObject = R.complement(isObject);
 
 // :: * -> Boolean
-export const isValid = R.complement(R.anyPass([R.isNil, R.isEmpty, isNaN]));
+const isValid = R.complement(R.anyPass([R.isNil, R.isEmpty, isNaN]));
 
 /**
  * is hexadecimal
  */
-export const isHex = R.test(/^[0-9A-F]+$/i);
+const isHex = R.test(/^[0-9A-F]+$/i);
 
 /**
  * is mongo objectId
  */
-export const isObjectId = (str) => {
+const isObjectId = (str) => {
   return isHex(str) && str.length === 24;
 };
 
 /**
  * is like an id (string, int, or objectId)
  */
-export const isIdLike = (val) =>
+const isIdLike = (val) =>
   isNotNil(val) && (isInteger(val) || isString(val) || isObjectId(val.toString()));
 
 /**
  * Checks if input value is `Function`.
  */
-export const isFunction = R.anyPass([
+const isFunction = R.anyPass([
   val => Object.prototype.toString.call(val) === '[object Function]',
   val => Object.prototype.toString.call(val) === '[object AsyncFunction]',
   val => Object.prototype.toString.call(val) === '[object GeneratorFunction]'
 ]);
 
-export const isTypeOfObject = val => typeof val === 'object';
+const isTypeOfObject = val => typeof val === 'object';
 
 /**
  * Checks if input value is language type of `Object`.
  */
-export const isObj = R.both(isNotNull, R.either(isTypeOfObject, isFunction));
+const isObj = R.both(isNotNull, R.either(isTypeOfObject, isFunction));
 
 /**
  * Checks if value is object-like. A value is object-like if it's not null and has a typeof result of "object".
  */
-export const isObjLike = R.both(isNotNull, isTypeOfObject);
+const isObjLike = R.both(isNotNull, isTypeOfObject);
 
+/**
+ * Check to see if an object is a plain object (created using `{}`, `new Object()` or `Object.create(null)`).
+ */
 const isObjectConstructor = R.pipe(R.toString, R.equals(R.toString(Object)));
 const hasObjectConstructor = R.pathSatisfies(
   R.both(isFunction, isObjectConstructor),
   ['constructor']
 );
-
-/**
- * Check to see if an object is a plain object (created using `{}`, `new Object()` or `Object.create(null)`).
- */
-export const isPlainObj = val => {
+const isPlainObj = val => {
   if (!isObjLike(val) || !_isObject(val)) {
     return false;
   }
@@ -119,3 +118,37 @@ export const isPlainObj = val => {
  */
 // :: * -> Boolean
 const isPromise = R.both(isObj, R.pipe(R.toString, R.equals('[object Promise]')));
+
+module.exports = {
+  hasNot,
+  isArray,
+  isFinite,
+  isFloat,
+  isFunction,
+  isHex,
+  isIdLike,
+  isInteger,
+  isNaN,
+  isNotArray,
+  isNotEmpty,
+  isNotFinite,
+  isNotFloat,
+  isNotInteger,
+  isNotNaN,
+  isNotNil,
+  isNotNull,
+  isNotNumber,
+  isNotObject,
+  isNotString,
+  isNull,
+  isNumber,
+  isObj,
+  isObject,
+  isObjectId,
+  isObjLike,
+  isPlainObj,
+  isPromise,
+  isString,
+  isTypeOfObject,
+  isValid,
+};

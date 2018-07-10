@@ -1,21 +1,21 @@
-import R from 'ramda';
+const R = require('ramda');
 
 /**
  * some convenient aka/alias
  */
-export const flatMap = R.chain;
-export const maptAt = R.adjust;
-export const constant = R.always;
-export const some = R.any;
-export const match = R.cond;
-export const includes = R.contains;
+const flatMap = R.chain;
+const maptAt = R.adjust;
+const constant = R.always;
+const some = R.any;
+const match = R.cond;
+const includes = R.contains;
 
 /**
  * Group by multiple
  *
  * usage: groupByMultiple([R.prop('a'), R.prop('b'), R.prop('c')], data)
  */
-export const groupByMultiple = R.curry((fields, data) => {
+const groupByMultiple = R.curry((fields, data) => {
   if (fields.length === 1) return R.groupBy(fields[0], data);
   let groupBy = R.groupBy(R.last(fields));
   R.times(() => {
@@ -31,7 +31,7 @@ export const groupByMultiple = R.curry((fields, data) => {
  * usage: includesAny(['a', 'e'], ['a', 'b', 'c']) // true
  */
 // :: [a] -> [a] -> Boolean
-export const includesAny = R.curry(R.compose(R.not, R.isEmpty, R.intersection));
+const includesAny = R.curry(R.compose(R.not, R.isEmpty, R.intersection));
 
 /**
  * Do all item in a list appear in another list?
@@ -39,7 +39,7 @@ export const includesAny = R.curry(R.compose(R.not, R.isEmpty, R.intersection));
  * usage: includesAll([2, 1], [1, 2, 3]) // true
  */
 // :: [a] -> [a] -> Boolean
-export const includesAll = R.curry(R.compose(R.isEmpty, R.difference));
+const includesAll = R.curry(R.compose(R.isEmpty, R.difference));
 
 /**
  * Do any item in a list not appear in another list?
@@ -47,7 +47,7 @@ export const includesAll = R.curry(R.compose(R.isEmpty, R.difference));
  * usage: includesNone(['e', 'f'], ['a', 'b', 'c']) // true
  */
 // :: [a] -> [a] -> Boolean
-export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
+const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
 
 /**
  * Create a list function
@@ -55,7 +55,7 @@ export const includesNone = R.curry(R.compose(R.isEmpty, R.intersection));
  * usage: R.compose(R.sum, list)(1, 2, 3) // 6
  */
 // :: a... -> [a...]
-export const list = R.compose(R.flatten, R.unapply(R.identity));
+const list = R.compose(R.flatten, R.unapply(R.identity));
 
 /**
  * Returns an array containing the value provided.
@@ -65,7 +65,7 @@ export const list = R.compose(R.flatten, R.unapply(R.identity));
  *        ensureArray([42]); //=> [42]
  */
 // :: a | [a] -> [a]
-export const asArray = R.when(R.complement(R.is(Array)), R.of);
+const asArray = R.when(R.complement(R.is(Array)), R.of);
 
 /**
  * Creates list of length `n`. Every item in list equals to `input` parameter.
@@ -73,8 +73,8 @@ export const asArray = R.when(R.complement(R.is(Array)), R.of);
  * usage replicate(2, 6) // [6, 6]
  */
 // :: Number -> a -> [a]
-export const replicate = R.flip(R.repeat);
-export const duplicate = replicate(2);
+const replicate = R.flip(R.repeat);
+const duplicate = replicate(2);
 
 /**
  * Creates an array with all falsy values removed.
@@ -83,19 +83,19 @@ export const duplicate = replicate(2);
  * usage: compact([0, 1, false, 2, '', 3]); //=> [1, 2, 3]
  */
 // Filterable f => f a -> f a
-export const compact = R.reject(R.compose(R.equals(false), Boolean));
+const compact = R.reject(R.compose(R.equals(false), Boolean));
 
 /**
  * Maps an array using a mapping function (val, index, obj) receives
  * an array element, its index, and the whole array itself
  */
 // :: ((a, Number, [a]) -> b) -> [a] -> [b]
-export const mapIndexed = R.addIndex(R.map);
+const mapIndexed = R.addIndex(R.map);
 
 /**
  * map with (val, index, obj) callback
  */
-export const reduceIndexed = R.addIndex(R.reduce);
+const reduceIndexed = R.addIndex(R.reduce);
 
 /**
  * Pick values a from list by indexes
@@ -103,7 +103,7 @@ export const reduceIndexed = R.addIndex(R.reduce);
  * usage: pickIndexes([0, 2], ['a', 'b', 'c']); // => ['a', 'c']
  */
 // :: [Number] -> [a] -> [a]
-export const pickIndexes = R.compose(R.values, R.pickAll);
+const pickIndexes = R.compose(R.values, R.pickAll);
 
 /**
  * Create a new object from a list objects by picking key and value
@@ -112,13 +112,13 @@ export const pickIndexes = R.compose(R.values, R.pickAll);
  *   var list = [{ id: 'a', val: 1000 }, { id: 'b', val: 2000 }];
  *   pickFrom('id', 'val', list); // => { 'a': 1000, 'b': 2000 }
  */
-export const pickFrom = R.curry((key, val, list) =>
+const pickFrom = R.curry((key, val, list) =>
   R.reduce((acc, i) => R.assoc(i[key], i[val], acc), {}, list));
 
 /**
  * Count members of the given filterable which satisfy the given predicate
  */
-export const count = R.compose(R.length, R.filter);
+const count = R.compose(R.length, R.filter);
 
 /**
  * Returns an over lens to the first index of list.
@@ -126,17 +126,17 @@ export const count = R.compose(R.length, R.filter);
  * usage: overhead(R.toUpper, ['foo', 'bar', 'baz']); //=> ['FOO', 'bar', 'baz']
  *
  */
-export const overhead = R.over(R.lensIndex(0));
+const overhead = R.over(R.lensIndex(0));
 
 /**
  * find object in a list by prop
  */
-export const findByProp = R.curry((prop, value, list) => R.find(R.propEq(prop, value), list));
+const findByProp = R.curry((prop, value, list) => R.find(R.propEq(prop, value), list));
 
 /**
  * find object in a list by id
  */
-export const findById = R.curry((id, list) => R.find(R.propEq('id', id), list));
+const findById = R.curry((id, list) => R.find(R.propEq('id', id), list));
 
 /**
  * Pivot a table with a function to resolve conflicts (multiple values
@@ -154,7 +154,7 @@ export const findById = R.curry((id, list) => R.find(R.propEq('id', id), list));
  *   [{ key: key1, attribute1: 1, attribute3: 3 },
  *    { key: key2, attribute1: 2, attribute2: 4 }]
  */
-export const pivotWith = R.curry((fn, keyCol, valCol, table) => R.pipe(
+const pivotWith = R.curry((fn, keyCol, valCol, table) => R.pipe(
   R.groupWith(R.eqBy(R.omit([keyCol, valCol]))),
   R.map((rowGroup) => R.reduce(
     R.mergeWith(fn),
@@ -177,7 +177,7 @@ export const pivotWith = R.curry((fn, keyCol, valCol, table) => R.pipe(
  *   [{ key: key1, attribute1: 1, attribute3: 3 },
  *    { key: key2, attribute1: 2, attribute2: 4 }]
  */
-export const pivot = pivotWith(R.nthArg(0));
+const pivot = pivotWith(R.nthArg(0));
 
 /**
  * Unpivot a table
@@ -189,7 +189,7 @@ export const pivot = pivotWith(R.nthArg(0));
  *   [{ attribute: attribute1, value: 1, key: key1 },
  *    { attribute: attribute3, value: 3, key: key1 }]
  */
-export const unpivot = R.curry((cols, attrCol, valCol, table) => R.chain((row) => R.pipe(
+const unpivot = R.curry((cols, attrCol, valCol, table) => R.chain((row) => R.pipe(
   R.pick(cols),
   R.filter(R.complement(R.isNil)),
   R.mapObjIndexed((v, k) => Object.assign({ [attrCol]: k, [valCol]: v }, R.omit(cols, row))),
@@ -205,7 +205,7 @@ export const unpivot = R.curry((cols, attrCol, valCol, table) => R.chain((row) =
  *   [{ attribute: attribute1, value: 1, key: key1 },
  *    { attribute: attribute3, value: 3, key: key1 }]
  */
-export const unpivotRest = R.curry((cols, attrCol, valCol, table) => R.chain((row) => R.pipe(
+const unpivotRest = R.curry((cols, attrCol, valCol, table) => R.chain((row) => R.pipe(
   R.omit(cols),
   R.filter(R.complement(R.isNil)),
   R.mapObjIndexed((v, k) => Object.assign({ [attrCol]: k, [valCol]: v }, R.pick(cols, row))),
@@ -218,7 +218,7 @@ export const unpivotRest = R.curry((cols, attrCol, valCol, table) => R.chain((ro
  * usage: separate(2, ['a','b','c','d','e'])
  * // -> [['a','b','c'],['d','e']]
  */
-export const separate = R.curry((n, list) => {
+const separate = R.curry((n, list) => {
   var len = list.length;
   var idxs = R.range(0, len);
   var f = (_v, idx) => Math.floor(idx * n / len);
@@ -228,7 +228,7 @@ export const separate = R.curry((n, list) => {
 /**
  * Separate a list into n parts based on a comparator
  */
-export const separateBy = R.curry((comparator, n, coll) => {
+const separateBy = R.curry((comparator, n, coll) => {
   let sorted = R.sortBy(comparator, coll);
   return separate(n, sorted);
 });
@@ -244,7 +244,7 @@ const variadicEither = (head, ...tail) =>
 const makeComparator = (prop) =>
   R.comparator((a,b) =>
     R.gt(R.prop(prop, a), R.prop(prop, b)));
-export const sortByProps = (props, list) =>
+const sortByProps = (props, list) =>
   R.sort(variadicEither(...R.map(makeComparator, props)), list);
 
 /**
@@ -261,7 +261,7 @@ export const sortByProps = (props, list) =>
  *        R.sort(compareProps(props), list);
  *
  */
-export const compareProps = (props, a, b) => {
+const compareProps = (props, a, b) => {
   // determine property compare function (lt or gt) based on + or -
   var propCompares = R.map(prop => prop[0] == '-'? R.gt : R.lt, props);
   // remove + and - from property names
@@ -282,7 +282,7 @@ export const compareProps = (props, a, b) => {
  * Swaps two elements of `array` having `oldIndex` and `newIndex` indexes.
  */
 // :: Number -> Number -> [a] -> [a]
-export const swap = (oldIndex, newIndex, array) => {
+const swap = (oldIndex, newIndex, array) => {
   const len = array.length;
   if (oldIndex >= len || newIndex >= len) {
     throw new Error(
@@ -304,7 +304,7 @@ export const swap = (oldIndex, newIndex, array) => {
  * @param {any[][]} a - A group of arrays to get unique elements from.
  * @return {any[]} An array of unique elements.
  */
-export const uniquesFor = (...a) => [...new Set([].concat(...a))];
+const uniquesFor = (...a) => [...new Set([].concat(...a))];
 
 /**
  * Returns the list of list of strings.
@@ -317,14 +317,14 @@ export const uniquesFor = (...a) => [...new Set([].concat(...a))];
  * [['a', 'b', 'c'], ['d'], ['e']]
  */
 // :: [[String]] -> [[String]]
-export const uniqLists = R.reduce((acc, nextList) =>
+const uniqLists = R.reduce((acc, nextList) =>
   R.append(R.without(R.unnest(acc), nextList), acc), []);
 
 /**
  * Returns a shuffled version of a list, using the
  * [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
  */
-export const shuffler = R.curry((random, list) => {
+const shuffler = R.curry((random, list) => {
   let idx = -1;
   let len = list.length;
   let position;
@@ -336,4 +336,43 @@ export const shuffler = R.curry((random, list) => {
   }
   return result;
 });
-export const shuffle = shuffler(Math.random);
+const shuffle = shuffler(Math.random);
+
+module.exports = {
+  asArray,
+  compact,
+  compareProps,
+  constant,
+  count,
+  duplicate,
+  findById,
+  findByProp,
+  flatMap,
+  groupByMultiple,
+  includes,
+  includesAll,
+  includesAny,
+  includesNone,
+  list,
+  mapIndexed,
+  maptAt,
+  match,
+  overhead,
+  pickFrom,
+  pickIndexes,
+  pivot,
+  pivotWith,
+  reduceIndexed,
+  replicate,
+  separate,
+  separateBy,
+  shuffle,
+  shuffler,
+  some,
+  sortByProps,
+  swap,
+  uniqLists,
+  uniquesFor,
+  unpivot,
+  unpivotRest
+};

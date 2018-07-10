@@ -1,22 +1,22 @@
-import R from 'ramda';
+const R = require('ramda');
 
 /**
  * Like `R.tap` but works with Promises.
  * @param {Function} promiseFn Function that returns Promise
  * @returns {Function} Run promiseFn with argument and returns the same argument on resolve
  */
-export const tapP = promiseFn => arg => promiseFn(arg).then(R.always(arg));
+const tapP = promiseFn => arg => promiseFn(arg).then(R.always(arg));
 
 // :: ERROR_CODE -> Error -> Promise.Reject Error
-export const rejectWithCode = R.curry((code, err) =>
+const rejectWithCode = R.curry((code, err) =>
   Promise.reject(Object.assign(err, { errorCode: code }))
 );
 
 // :: [Promise a] -> Promise a
-export const allP = promises => Promise.all(promises);
+const allP = promises => Promise.all(promises);
 
 // :: Number -> Promise.Resolved ()
-export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
 /**
@@ -49,7 +49,7 @@ export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
  * ```
  */
 // :: [Number] -> (b -> Boolean) -> (b -> Error) -> (() -> Promise a b) -> (b -> Promise a b)
-export const retryOrFail = R.curry((delays, stopFn, errFn, retryFn) => {
+const retryOrFail = R.curry((delays, stopFn, errFn, retryFn) => {
   const maxRetries = delays.length;
   let retryCounter = 0;
 
@@ -71,3 +71,11 @@ export const retryOrFail = R.curry((delays, stopFn, errFn, retryFn) => {
 
   return run;
 });
+
+module.exports = {
+  allP,
+  delay,
+  rejectWithCode,
+  retryOrFail,
+  tapP
+};

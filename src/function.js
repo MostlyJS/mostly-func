@@ -1,13 +1,13 @@
-import R from 'ramda';
+const R = require('ramda');
 
-export const noop = () => {};
+const noop = () => {};
 
 /**
  * Apply a given function N times
  *
  * usage: applyN(x => x * x, 4)(2); //=> 65536 (2 -> 4 -> 16 -> 256 -> 65536)
  */
-export const applyN = R.compose(R.reduceRight(R.compose, R.identity), R.repeat);
+const applyN = R.compose(R.reduceRight(R.compose, R.identity), R.repeat);
 
 /**
  * Apply function over the value at the end of a path
@@ -16,7 +16,7 @@ export const applyN = R.compose(R.reduceRight(R.compose, R.identity), R.repeat);
  *   //=> { a: { b: { c: 4 } } }
  */
 // :: [String] -> (a -> b) -> {k: a} -> {k: b}
-export const applyPath = R.curry((path, fn, obj) =>
+const applyPath = R.curry((path, fn, obj) =>
   R.assocPath(path, fn(R.path(path, obj)), obj)
 );
 
@@ -32,4 +32,11 @@ export const applyPath = R.curry((path, fn, obj) =>
  *   knit([toUpper, toLower])(pairs);
  *     //=> [["KEY1", "val1"], ["KEY2", "val2"], ["KEY3", "val3"]]
  */
-export const knit = R.compose(R.map, R.zipWith(R.call));
+const knit = R.compose(R.map, R.zipWith(R.call));
+
+module.exports = {
+  applyN,
+  applyPath,
+  knit,
+  noop
+};

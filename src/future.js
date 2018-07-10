@@ -1,3 +1,5 @@
-import Future from 'fluture';
+const Future = require('fluture');
 
-export { Future }
+module.exports = {
+  Future
+};

@@ -19,7 +19,7 @@ Please see the [documentation site](https://mostlyjs.github.io).
 ## Installation
 
 ```bash
-npm install mostly-func
+npm install mostly-func --save
 ```
 
 # License
